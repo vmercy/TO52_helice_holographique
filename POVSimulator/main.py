@@ -76,10 +76,11 @@ def drillHoles(draw, maskDiameter, nbHoles, holesDiameter, angleStep, angleMin =
 # Configuration variables
 maskDiameter = 5000
 holesDiameter = 20
-nbHoles = 144
+nbHoles = 60
 imageFileName = 'logo_utbm.png'
 outputFileName = 'result.png'
-zoom = 90 #background image zoom in %
+step = 1
+zoom = 80 #background image zoom in %
 
 if __name__ == "__main__":
   mask = Image.new('RGBA', (maskDiameter, )*2, (255, 0, 0, 0)) # The mask is a black-filled image with transparent holes
@@ -89,7 +90,7 @@ if __name__ == "__main__":
   draw = ImageDraw.Draw(mask)
   draw.rectangle([(0, 0), (maskDiameter, maskDiameter)], 'black') #
 
-  drillHoles(draw, maskDiameter, nbHoles, holesDiameter, 5)
+  drillHoles(draw, maskDiameter, nbHoles, holesDiameter, step)
   #maskFileName = 'mask.png'
   #mask.save(maskFileName)
   backgroundImage = backgroundImage.convert('RGBA')
