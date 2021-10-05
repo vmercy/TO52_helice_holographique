@@ -11,7 +11,7 @@ from time import sleep
 GPIO.setmode(GPIO.BCM)
 
 ledPin = 18
-delay = 0.5
+delay = 0.1
 
 GPIO.setup(ledPin, GPIO.OUT)
 
