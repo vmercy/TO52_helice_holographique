@@ -11,11 +11,12 @@ from time import sleep
 GPIO.setmode(GPIO.BCM)
 
 ledPin = 18
+delay = 0.5
 
 GPIO.setup(ledPin, GPIO.OUT)
 
 while(1):
   GPIO.output(ledPin, GPIO.HIGH)
-  sleep(1)
+  sleep(delay)
   GPIO.output(ledPin, GPIO.LOW)
-  sleep(1)
+  sleep(delay)
