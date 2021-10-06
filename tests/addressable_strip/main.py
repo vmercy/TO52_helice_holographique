@@ -14,11 +14,11 @@ strip.clear_strip()
 nbLeds = 144//3
 
 for i in range(0,nbLeds):
-  strip.set_pixel_rgb(i,  0x0000FF)
+  strip.set_pixel_rgb(i,  0xFF0000)
 for i in range(nbLeds,2*nbLeds):
   strip.set_pixel_rgb(i,  0xFFFFFF)
 for i in range(2*nbLeds,3*nbLeds):
-  strip.set_pixel_rgb(i,  0xFF0000)
+  strip.set_pixel_rgb(i,  0x0000FF)
 
 strip.show()
 
