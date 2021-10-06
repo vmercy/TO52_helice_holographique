@@ -20,6 +20,6 @@ strip.set_pixel_rgb(5, 0x0000FF)  # Blue
 
 strip.show()
 
-sleep(1)
+sleep(10)
 
 strip.cleanup()
