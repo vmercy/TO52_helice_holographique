@@ -22,7 +22,7 @@ signal.signal(signal.SIGINT, signal_handler) """
 strip.clear_strip()
 
 nbLeds = 144
-startFreq = int(sys.argv[0])
+startFreq = int(sys.argv[1])
 freqMax = 1000
 dureeFixe = 1
 for freq in range(startFreq,freqMax):
