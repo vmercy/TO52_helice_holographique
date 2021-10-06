@@ -11,16 +11,17 @@ strip = apa102.APA102(num_led=144, order='rgb')
 
 strip.clear_strip()
 
-nbLeds = 144//3
+nbLeds = 144
+freq = 10
+delay = (1/freq)/2
 
-for i in range(0,nbLeds):
-  strip.set_pixel_rgb(i,  0xFFFFFF)
-  #strip.set_pixel_rgb(i,  0xFF0000)
-for i in range(nbLeds,2*nbLeds):
-  strip.set_pixel_rgb(i,  0xFFFFFF)
-for i in range(2*nbLeds,3*nbLeds):
-  strip.set_pixel_rgb(i,  0xFFFFFF)
-  #strip.set_pixel_rgb(i,  0x0000FF)
+while(1):
+  for i in range(nbLeds):
+    strip.set_pixel_rgb(i,  0xFFFFFF)
+  sleep(delay)
+  for i in range(nbLeds):
+    strip.set_pixel_rgb(i,  0xFFFFFF)
+  sleep(delay)
 
 strip.show()
 
