@@ -15,8 +15,9 @@ nbLeds = 144
 freq = 10
 delay = (1/freq)/2
 print(delay)
+duree = 10
 
-while(1):
+while(duree):
   for i in range(nbLeds):
     strip.set_pixel_rgb(i,  0xFFFFFF)
   strip.show()
@@ -25,5 +26,6 @@ while(1):
     strip.set_pixel_rgb(i,  0x000000)
   strip.show()
   sleep(delay)
+  duree-=2*delay
 
 strip.cleanup()
