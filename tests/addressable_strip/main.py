@@ -22,9 +22,10 @@ signal.signal(signal.SIGINT, signal_handler) """
 strip.clear_strip()
 
 nbLeds = 144
+startFreq = sys.argv[0]
 freqMax = 1000
 dureeFixe = 1
-for freq in range(750,freqMax):
+for freq in range(startFreq,freqMax):
   delay = (1/freq)/2
   print(freq)
   duree = dureeFixe
