@@ -12,7 +12,7 @@ strip = apa102.APA102(num_led=144, order='rgb')
 strip.clear_strip()
 
 nbLeds = 144
-freq = 10
+freq = 1
 delay = (1/freq)/2
 print(delay)
 
