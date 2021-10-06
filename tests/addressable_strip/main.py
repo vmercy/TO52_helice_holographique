@@ -24,7 +24,7 @@ strip.clear_strip()
 nbLeds = 144
 freqMax = 1000
 dureeFixe = 1
-for freq in range(1000,freqMax):
+for freq in range(500,freqMax):
   delay = (1/freq)/2
   print(freq)
   duree = dureeFixe
