@@ -11,14 +11,13 @@ import sys
 
 strip = apa102.APA102(num_led=144, order='rgb')
 
-def signal_handler(sig, frame):
+""" def signal_handler(sig, frame):
     global strip
     print('Extinction du bandeau')
     strip.cleanup()
     sys.exit(0)
 
-
-signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGINT, signal_handler) """
 
 strip.clear_strip()
 
