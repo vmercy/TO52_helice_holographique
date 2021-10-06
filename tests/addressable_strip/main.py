@@ -11,12 +11,14 @@ strip = apa102.APA102(num_led=144, order='rgb')
 
 strip.clear_strip()
 
-strip.set_pixel_rgb(0,  0xFF0000)  # Red
-strip.set_pixel_rgb(1, 0x00FF00)  # Green
-strip.set_pixel_rgb(2, 0x00FF00)  # Green
-strip.set_pixel_rgb(3, 0x0000FF)  # Blue
-strip.set_pixel_rgb(4, 0x0000FF)  # Blue
-strip.set_pixel_rgb(5, 0x0000FF)  # Blue
+nbLeds = 144//3
+
+for i in range(0,nbLeds):
+  strip.set_pixel_rgb(i,  0x0000FF)
+for i in range(nbLeds,2*nbLeds):
+  strip.set_pixel_rgb(i,  0xFFFFFF)
+for i in range(2*nbLeds,3*nbLeds):
+  strip.set_pixel_rgb(i,  0xFF0000)
 
 strip.show()
 
