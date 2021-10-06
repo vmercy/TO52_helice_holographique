@@ -26,7 +26,6 @@ freq = 10
 delay = (1/freq)/2
 print(delay)
 duree = 10
-strip.cleanup()
 
 while(duree):
   for i in range(nbLeds):
