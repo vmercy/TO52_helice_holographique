@@ -27,6 +27,7 @@ delay = (1/freq)/2
 print(delay)
 dureeFixe = 2
 for freq in range(freqMax):
+  print(freq)
   duree = dureeFixe
   while(duree>=0):
     for i in range(nbLeds):
@@ -38,5 +39,4 @@ for freq in range(freqMax):
     strip.show()
     sleep(delay)
     duree-=2*delay
-    print(duree)
   strip.cleanup()
