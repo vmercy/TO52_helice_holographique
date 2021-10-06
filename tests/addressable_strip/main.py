@@ -19,13 +19,11 @@ print(delay)
 while(1):
   for i in range(nbLeds):
     strip.set_pixel_rgb(i,  0xFFFFFF)
+  strip.show()
   sleep(delay)
   for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0xFFFFFF)
+    strip.set_pixel_rgb(i,  0x000000)
+  strip.show()
   sleep(delay)
-
-strip.show()
-
-sleep(10)
 
 strip.cleanup()
