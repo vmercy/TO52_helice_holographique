@@ -22,20 +22,21 @@ signal.signal(signal.SIGINT, signal_handler) """
 strip.clear_strip()
 
 nbLeds = 144
-freq = 10
+freqMax = 1000
 delay = (1/freq)/2
 print(delay)
-duree = 10
-
-while(duree>=0):
-  for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0xFFFFFF)
-  strip.show()
-  sleep(delay)
-  for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0x000000)
-  strip.show()
-  sleep(delay)
-  duree-=2*delay
-  print(duree)
-strip.cleanup()
+dureeFixe = 2
+for freq in range(freqMax):
+  duree = dureeFixe
+  while(duree>=0):
+    for i in range(nbLeds):
+      strip.set_pixel_rgb(i,  0xFFFFFF)
+    strip.show()
+    sleep(delay)
+    for i in range(nbLeds):
+      strip.set_pixel_rgb(i,  0x000000)
+    strip.show()
+    sleep(delay)
+    duree-=2*delay
+    print(duree)
+  strip.cleanup()
