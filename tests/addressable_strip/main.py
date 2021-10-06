@@ -23,10 +23,8 @@ strip.clear_strip()
 
 nbLeds = 144
 freq = int(sys.argv[1])
-dureeFixe = 1
+duree = 10
 delay = (1/freq)/2
-print(freq)
-duree = dureeFixe
 while(duree>=0):
   for i in range(nbLeds):
     strip.set_pixel_rgb(i,  0xFFFFFF)
