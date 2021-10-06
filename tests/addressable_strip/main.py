@@ -9,13 +9,14 @@ from time import sleep
 import signal
 import sys
 
+strip = apa102.APA102(num_led=144, order='rgb')
+
 def signal_handler(sig, frame):
     global strip
     print('Extinction du bandeau')
     strip.cleanup()
     sys.exit(0)
 
-strip = apa102.APA102(num_led=144, order='rgb')
 
 signal.signal(signal.SIGINT, signal_handler)
 
