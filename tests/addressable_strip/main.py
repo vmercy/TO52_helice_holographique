@@ -6,8 +6,18 @@ addressable_strip/main.py: Draft script aiming to test an addressable LED strip 
 """
 from apa102_pi.driver import apa102
 from time import sleep
+import signal
+import sys
+
+def signal_handler(sig, frame):
+    global strip
+    print('Extinction du bandeau')
+    strip.cleanup()
+    sys.exit(0)
 
 strip = apa102.APA102(num_led=144, order='rgb')
+
+signal.signal(signal.SIGINT, signal_handler)
 
 strip.clear_strip()
 
@@ -16,6 +26,7 @@ freq = 10
 delay = (1/freq)/2
 print(delay)
 duree = 10
+strip.cleanup()
 
 while(duree):
   for i in range(nbLeds):
@@ -27,5 +38,6 @@ while(duree):
   strip.show()
   sleep(delay)
   duree-=2*delay
+
 
 strip.cleanup()
