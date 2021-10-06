@@ -30,11 +30,11 @@ strip.cleanup()
 
 while(duree):
   for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0x000000)
+    strip.set_pixel_rgb(i,  0xFFFFFF)
   strip.show()
   sleep(delay)
   for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0xFFFFFF)
+    strip.set_pixel_rgb(i,  0x000000)
   strip.show()
   sleep(delay)
   duree-=2*delay
