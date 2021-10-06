@@ -38,4 +38,5 @@ for freq in range(1,freqMax):
     strip.show()
     sleep(delay)
     duree-=2*delay
-  strip.cleanup()
+
+strip.cleanup()
