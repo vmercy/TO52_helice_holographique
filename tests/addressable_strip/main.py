@@ -14,6 +14,7 @@ strip.clear_strip()
 nbLeds = 144
 freq = 10
 delay = (1/freq)/2
+print(delay)
 
 while(1):
   for i in range(nbLeds):
