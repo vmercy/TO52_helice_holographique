@@ -37,6 +37,5 @@ while(duree):
   strip.show()
   sleep(delay)
   duree-=2*delay
-
-
+  print(duree)
 strip.cleanup()
