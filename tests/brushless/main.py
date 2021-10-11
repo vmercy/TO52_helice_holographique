@@ -19,7 +19,7 @@ time.sleep(2)
 print('Starting motor')
 try:
   while True:
-    p.ChangeDutyCycle(5)
+    p.ChangeDutyCycle(50)
     time.sleep(0.5)
 except KeyboardInterrupt:
   p.stop()
