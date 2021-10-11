@@ -8,7 +8,7 @@ blink/main.py: Script that makes an LED blink
 import RPi.GPIO as GPIO
 import time
 
-servoPIN = 17
+servoPIN = 18
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servoPIN, GPIO.OUT)
 
