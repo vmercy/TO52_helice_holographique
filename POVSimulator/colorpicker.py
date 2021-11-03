@@ -10,8 +10,8 @@ def renderPickedPointsPreview(filename, pickedColorPoints, ellipsesDiameter):
       pickedColorPoints (array): The list of picked point colors
       ellipsesDiameter ([type]): The diameter of each ellipse representing a picked color point
   """
-  maxSizingColorPoint = max(pickedColorPoints, key=(lambda x:max(x[0:1])))
-  size = max(maxSizingColorPoint[0:1])
+  maxSizingColorPoint = max(pickedColorPoints, key=(lambda x:max(x[0][1])))
+  size = max(maxSizingColorPoint[0][1])
   size+=ellipsesDiameter
   size = ceil(size)
   outputImg = Image.new('RGB', (size, )*2, (0, 0, 0))
@@ -19,11 +19,11 @@ def renderPickedPointsPreview(filename, pickedColorPoints, ellipsesDiameter):
   draw.rectangle([(0, 0), (size, )*2], 'black')
   for pickedColorPoint in pickedColorPoints:
     upperLeftCornerCoordinates = (
-        pickedColorPoint[0]-ellipsesDiameter/2, pickedColorPoint[1]-ellipsesDiameter/2)
+        pickedColorPoint[0][1][0]-ellipsesDiameter/2, pickedColorPoint[0][1][1]-ellipsesDiameter/2)
     bottomRightCornerCoordinates = (
         upperLeftCornerCoordinates[0]+ellipsesDiameter, upperLeftCornerCoordinates[1]+ellipsesDiameter)
     draw.ellipse([upperLeftCornerCoordinates,
-                  bottomRightCornerCoordinates], fill=pickedColorPoint[2])
+                  bottomRightCornerCoordinates], fill=pickedColorPoint[1])
   outputImg.save(filename)
 
 def pickColors(pickingPoints, subjectImage):
@@ -34,12 +34,12 @@ def pickColors(pickingPoints, subjectImage):
       subjectImage (PIL.Image): The image where colors must be picked
 
   Returns:
-      Array: List of picked colors in the form (x,y,(r,g,b))
+      Array: List of picked colors in the form (((theta,rIndex),(x,y)),(r,g,b)))
   """
   pickedColorPoints = []
   for pickingPoint in pickingPoints:
-    pixel = subjectImage.getpixel(pickingPoint)
-    pickedColorPoints.append((pickingPoint[0], pickingPoint[1],pixel))
+    pixel = subjectImage.getpixel(pickingPoint[1])
+    pickedColorPoints.append((pickingPoint,pixel))
   return pickedColorPoints
 
 def computePickingPointsPositionsOnDiametralLine(pickingAreaDiameter, nbPoints, angle):
@@ -54,20 +54,20 @@ def computePickingPointsPositionsOnDiametralLine(pickingAreaDiameter, nbPoints, 
       array: Array of (x,y) tuples containing holes center positions
   """
   spaceBetweenPoints = pickingAreaDiameter / nbPoints
-  radialCoordinates = [] #contains radial coordinate of holes starting from the center of mask
-  if(nbPoints%2): # number of holes is odd, so we place the first hole to be concentric with the main disk
+  radialCoordinates = []
+  if(nbPoints%2): # number of points is odd, so we place the first one on the center
     radialOrigin = 0
     nbPoints-=1
   else:
     radialOrigin = spaceBetweenPoints/2
     nbPoints-=2
-  radialCoordinates.append(radialOrigin)
+    radialCoordinates.append(radialOrigin)
   for i in range(0,nbPoints//2):
     radialCoordinates.append(radialOrigin+(i+1)*spaceBetweenPoints)
   pointsPositions = []
-  for radial in radialCoordinates:
-    pointsPositions.append((pickingAreaDiameter/2+radial*sin(angle), pickingAreaDiameter/2+radial*cos(angle)))
-    pointsPositions.append((pickingAreaDiameter/2-radial*sin(angle), pickingAreaDiameter/2-radial*cos(angle)))
+  for radialIndex, radial in enumerate(radialCoordinates):
+    pointsPositions.append(((angle, radialIndex),(pickingAreaDiameter/2+radial*sin(angle), pickingAreaDiameter/2+radial*cos(angle))))
+    pointsPositions.append(((angle, -radialIndex),(pickingAreaDiameter/2-radial*sin(angle), pickingAreaDiameter/2-radial*cos(angle))))
   return pointsPositions
 
 def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin = 0, angleMax = 180):
@@ -86,12 +86,13 @@ def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin =
   points = []
   for i in range (angleMin,angleMax,angleStep):
     angle_rad = pi/180.0 * i
-    #TODO: ajouter les coordonnées polaires en passant i à la fonction computePickingPointsPositionsOnLine
     points += computePickingPointsPositionsOnDiametralLine(pickingAreaDiameter, nbPointsPerLine, angle_rad)
+  if(nbPointsPerLine%2): #if the number of points per line is odd then we add the center point once
+    points.append(((0,0),(pickingAreaDiameter//2,)*2))
   return points
 
 # Configuration variables
-nbEllipsesPerDiametralLine = 50
+nbEllipsesPerDiametralLine = 13
 imageFileName = 'logo_utbm_detoure.png'
 outputFileName = 'result_picking.png'
 angleStep = 5
@@ -100,15 +101,14 @@ zoomFactor = 100 #zoom factor in percent
 if __name__ == "__main__":
   sourceImg = Image.open(imageFileName)
   sourceImg.convert('RGBA')
-  print(sourceImg.mode)
   imgMaxSize = max(sourceImg.size)
   baseImgSize = imgMaxSize*100//zoomFactor
   centeredImage = Image.new('RGB', (baseImgSize,)*2,'black')
   
-  #TODO: center image and dezoom
   centeredImage.paste(sourceImg,((baseImgSize-sourceImg.size[0])//2,(baseImgSize-sourceImg.size[1])//2), mask=sourceImg)
   centeredImage.save('TEST.png')
 
   pickingPoints = getPickingPoints(baseImgSize, nbEllipsesPerDiametralLine, angleStep)
   pickedColors = pickColors(pickingPoints, centeredImage)
+  print(pickedColors)
   renderPickedPointsPreview(outputFileName, pickedColors, 10)
