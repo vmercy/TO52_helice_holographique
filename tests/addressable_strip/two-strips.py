@@ -17,15 +17,16 @@ Strip #2 (SPI1)
 |-------------------------	|------------------	|
 | /                       	| red              	|
 | 6 (GND)                 	| black            	|
-| 21 (SCLK)               	| yellow            |
-| 20 (MOSI)               	| green           	|
+| 40 (SCLK1 = GPIO 21)     	| yellow            |
+| 38 (MOSI1 = GPIO 20)     	| green           	|
 """
 from apa102_pi.driver import apa102
-from time import sleep
+from time import sleep, time
 import signal
 import sys
 
 strip = apa102.APA102(num_led=144, order='rgb')
+strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 
 """ def signal_handler(sig, frame):
     global strip
@@ -38,16 +39,11 @@ signal.signal(signal.SIGINT, signal_handler) """
 strip.clear_strip()
 
 nbLeds = 144
-freq = int(sys.argv[1])
-duree = 10
-delay = (1/freq)/2
-while(duree>=0):
-  for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0xFFFFFF)
+for i in range(nbLeds):
+  strip.set_pixel_rgb(i,  0xFF0000)
+  strip2.set_pixel_rgb(i, 0x0000FF)
   strip.show()
-  for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0x000000)
-  strip.show()
-  duree-=2*delay
+  strip2.show()
 
+sleep(5)
 strip.cleanup()
