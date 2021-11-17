@@ -38,12 +38,14 @@ signal.signal(signal.SIGINT, signal_handler) """
 
 strip.clear_strip()
 
-nbLeds = 144
+nbLeds = 50
 for i in range(nbLeds):
   strip.set_pixel_rgb(i,  0xFF0000)
-  strip2.set_pixel_rgb(i, 0x0000FF)
   strip.show()
+for i in range(nbLeds)
+  strip2.set_pixel_rgb(i, 0x0000FF)
   strip2.show()
 
 sleep(5)
 strip.cleanup()
+strip2.cleanup()
