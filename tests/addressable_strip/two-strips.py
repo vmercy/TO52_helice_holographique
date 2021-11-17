@@ -40,9 +40,9 @@ strip.clear_strip()
 
 nbLeds = 50
 for i in range(nbLeds):
-  strip.set_pixel_rgb(i,  0xFF0000)
+  strip.set_pixel_rgb(i,  0xFF0000 if i%2 else 0x0000FF)
 for i in range(nbLeds):
-  strip2.set_pixel_rgb(i, 0x0000FF)
+  strip2.set_pixel_rgb(i, 0x0000FF if i%2 else 0xFF0000)
 
 strip.show()
 strip2.show()
