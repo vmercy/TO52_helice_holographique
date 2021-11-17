@@ -3,13 +3,28 @@
 
 """
 addressable_strip/main.py: Draft script aiming to test an addressable LED strip with following reference: sj-100144-102
+Tutorial: https://pimylifeup.com/raspberry-pi-led-strip-apa102/
+Wiring:
+| Raspberry Pi (physical) 	| APA102 LED Strip 	|
+|-------------------------	|------------------	|
+| /                       	| red              	|
+| 6 (GND)                 	| black            	|
+| 23 (SCLK)               	| yellow            |
+| 19 (MOSI)               	| green           	|
+
+| Raspberry Pi (physical) 	| APA102 LED Strip 	|
+|-------------------------	|------------------	|
+| /                       	| red              	|
+| 6 (GND)                 	| black            	|
+| 21 (SCLK)               	| yellow            |
+| 20 (MOSI)               	| green           	|
 """
 from apa102_pi.driver import apa102
 from time import sleep
 import signal
 import sys
 
-strip = apa102.APA102(num_led=144, order='rgb')
+strip = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 
 """ def signal_handler(sig, frame):
     global strip
