@@ -42,7 +42,7 @@ nbLeds = 50
 for i in range(nbLeds):
   strip.set_pixel_rgb(i,  0xFF0000)
   strip.show()
-for i in range(nbLeds)
+for i in range(nbLeds):
   strip2.set_pixel_rgb(i, 0x0000FF)
   strip2.show()
 
