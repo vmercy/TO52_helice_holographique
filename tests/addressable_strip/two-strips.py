@@ -25,7 +25,7 @@ from time import sleep
 import signal
 import sys
 
-strip = apa102.APA102(num_led=144, order='rgb', mosi=19, sclk=23)
+strip = apa102.APA102(num_led=144, order='rgb')
 
 """ def signal_handler(sig, frame):
     global strip
