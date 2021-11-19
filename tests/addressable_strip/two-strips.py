@@ -47,6 +47,6 @@ for i in range(nbLeds):
 for i in range(15):
   strip.show()
   strip2.show()
-sleep(1)
+  sleep(1)
 strip.cleanup()
 strip2.cleanup()
