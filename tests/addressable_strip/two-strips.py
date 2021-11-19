@@ -44,8 +44,9 @@ for i in range(nbLeds):
 for i in range(nbLeds):
   strip2.set_pixel_rgb(i, 0x0000FF if i%2 else 0xFF0000)
 
-strip.show()
-strip2.show()
-sleep(15)
+for i in range(15):
+  strip.show()
+  strip2.show()
+sleep(1)
 strip.cleanup()
 strip2.cleanup()
