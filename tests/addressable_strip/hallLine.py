@@ -57,6 +57,5 @@ strip2.clear_strip()
 while(True):
   near = GPIO.input(17)
   print(near)
-"""   while near:
-    showLine() """
-
+  while near:
+    showLine()
