@@ -53,8 +53,8 @@ def showLine():
 
 
 while(True):
-  print(near)
   near = GPIO.input(17)
+  print(near)
   while near:
     showLine()
     near = GPIO.input(17)
