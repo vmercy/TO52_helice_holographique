@@ -53,4 +53,4 @@ def showLine(duration):
 
 for i in range(60):
   showLine(0.05)
-  sleep(1/8)
+  sleep(1)
