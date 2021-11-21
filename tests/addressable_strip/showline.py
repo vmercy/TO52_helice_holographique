@@ -48,9 +48,9 @@ def showLine(duration):
   strip.show()
   strip2.show()
   sleep(duration)
-  strip.cleanup()
-  strip2.cleanup()
+  strip.clear_strip()
+  strip2.clear_strip()
 
 for i in range(60):
   showLine(0.05)
-  sleep(1)
+  sleep(1/8)
