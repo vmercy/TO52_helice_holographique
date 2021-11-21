@@ -52,5 +52,5 @@ def showLine(duration):
   strip2.clear_strip()
 
 for i in range(600):
-  showLine(0.001)
+  showLine(0.0001)
   sleep(0.12)
