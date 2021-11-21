@@ -51,11 +51,12 @@ def showLine():
   strip.show()
   strip2.show()
 
-strip.clear_strip()
-strip2.clear_strip()
 
 while(True):
-  near = GPIO.input(17)
   print(near)
   while near:
+    near = GPIO.input(17)
     showLine()
+  strip.clear_strip()
+  strip2.clear_strip()
+  
