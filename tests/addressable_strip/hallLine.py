@@ -54,10 +54,10 @@ def showLine():
 
 while(True):
   print(near)
-  near = False
+  near = GPIO.input(17)
   while near:
-    near = GPIO.input(17)
     showLine()
+    near = GPIO.input(17)
   strip.clear_strip()
   strip2.clear_strip()
   
