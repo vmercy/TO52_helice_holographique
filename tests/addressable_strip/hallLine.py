@@ -46,7 +46,7 @@ nbLeds = 50
 def showLine():
   global strip, strip2
   for i in range(nbLeds):
-    strip.set_pixel_rgb(i,  0xFF0000 if i%2 else 0x0000FF)
+    strip.set_pixel_rgb(i,  0xFF0 if i%2 else 0x0000FF)
   for i in range(nbLeds):
     strip2.set_pixel_rgb(i, 0x0000FF if i%2 else 0xFF0000)
   strip.show()
