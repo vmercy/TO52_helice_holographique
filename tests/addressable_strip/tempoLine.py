@@ -5,8 +5,8 @@ import signal
 import random
 import sys
 
-strip = apa102.APA102(num_led=144, order='rgb')
-strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
+strip = apa102.APA102(num_led=48, order='rgb')
+strip2 = apa102.APA102(num_led=48, order='rgb', mosi=20, sclk=21)
 motor = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(motor,GPIO.OUT)
@@ -25,7 +25,7 @@ signal.signal(signal.SIGINT, cleanStrip)
 GPIO.output(motor, GPIO.HIGH)
 print(sys.argv)
 while True:
-  for i in range(10):
+  for i in range(48):
     strip.set_pixel_rgb(i,0xFF0000)
   strip.show()
   #time.sleep(0.001)
