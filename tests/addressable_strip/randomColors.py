@@ -8,7 +8,7 @@ import sys
 strip = apa102.APA102(num_led=144, order='rgb')
 strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 motor = 27
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(motor,GPIO.OUT)
 
 def cleanStrip(sig, frame):
