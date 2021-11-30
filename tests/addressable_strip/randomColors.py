@@ -9,10 +9,11 @@ import sys
 strip = apa102.APA102(num_led=144, order='rgb')
 strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 
-def cleanStrip():
+def cleanStrip(sig, frame):
   global strip, strip2
   strip.cleanup()
   strip2.cleanup()
+  sys.exit(0)
 
 signal.signal(signal.SIGINT, cleanStrip)
 
