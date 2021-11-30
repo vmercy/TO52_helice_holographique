@@ -7,9 +7,6 @@ import sys
 strip = apa102.APA102(num_led=144, order='rgb')
 strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 
-def clamp(x): 
-  return max(0, min(x, 255))
-
 def colorFade(strip, colorFrom, colorTo, wait_ms=20, steps=10):
     steps = 200
 
@@ -21,8 +18,9 @@ def colorFade(strip, colorFrom, colorTo, wait_ms=20, steps=10):
     b = int(colorFrom[2])
 
     for x in range(steps):
+        c = (int(r), int(g), int(b))
         for i in range(48):
-            strip.set_pixel_rgb(i, "0x{0:02x}{1:02x}{2:02x}".format(clamp(r), clamp(g), clamp(b)))
+            strip.set_pixel_rgb(i, hex(c))
         strip.show()
         time.sleep(wait_ms / 1000.0)
         r += step_R
