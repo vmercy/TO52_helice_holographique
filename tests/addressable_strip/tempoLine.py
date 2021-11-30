@@ -29,4 +29,4 @@ while True:
   strip.show()
   #time.sleep(0.001)
   strip.clear_strip()
-  time.sleep(sys.argv[2])
+  time.sleep(float(sys.argv[2]))
