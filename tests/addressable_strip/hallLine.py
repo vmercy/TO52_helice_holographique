@@ -58,8 +58,7 @@ while(True):
   print(near)
   if near:
     showLine()
-    sleep(0.1)
-    #near = GPIO.input(endStopPin)
+    near = GPIO.input(endStopPin)
   strip.clear_strip()
   strip2.clear_strip()
   
