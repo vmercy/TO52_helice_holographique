@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.IN)
+GPIO.setup(27, GPIO.IN)
 
 while(True):
-  near = GPIO.input(17)
+  near = GPIO.input(27)
   print(near)

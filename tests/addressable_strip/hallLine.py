@@ -30,7 +30,8 @@ strip = apa102.APA102(num_led=144, order='rgb')
 strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.IN)
+endStopPin = 27
+GPIO.setup(endStopPin, GPIO.IN)
 
 """ def signal_handler(sig, frame):
     global strip
@@ -53,11 +54,11 @@ def showLine():
 
 
 while(True):
-  near = GPIO.input(17)
+  near = GPIO.input(endStopPin)
   print(near)
   while near:
     showLine()
-    near = GPIO.input(17)
+    near = GPIO.input(endStopPin)
   strip.clear_strip()
   strip2.clear_strip()
   
