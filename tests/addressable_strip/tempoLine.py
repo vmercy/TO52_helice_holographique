@@ -22,7 +22,7 @@ def cleanStrip(sig, frame):
 
 signal.signal(signal.SIGINT, cleanStrip)
 
-#GPIO.output(motor, GPIO.HIGH)
+GPIO.output(motor, GPIO.HIGH)
 while True:
   for i in range(10):
     strip.set_pixel_rgb(i,0xFF0000)
