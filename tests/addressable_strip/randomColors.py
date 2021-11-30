@@ -14,7 +14,7 @@ def cleanStrip():
   strip.cleanup()
   strip2.cleanup()
 
-signal.signal(signal.SIGTERM, 'cleanStrip')
+signal.signal(signal.SIGTERM, cleanStrip)
 
 def randomColors(strips, delay):
     r = random.randint(0,255)
