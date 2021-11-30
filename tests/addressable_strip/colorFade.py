@@ -20,7 +20,7 @@ def colorFade(strip, colorFrom, colorTo, wait_ms=20, steps=10):
     for x in range(steps):
         c = (int(r), int(g), int(b))
         for i in range(48):
-            strip.set_pixel_rgb(i, r<<16|g<<8|b)
+            strip.set_pixel_rgb(i, c[0]<<16|c[1]<<8|c[2])
         strip.show()
         sleep(wait_ms / 1000.0)
         r += step_R
