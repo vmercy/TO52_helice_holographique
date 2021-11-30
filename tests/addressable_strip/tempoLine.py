@@ -27,6 +27,6 @@ while True:
   for i in range(10):
     strip.set_pixel_rgb(i,0xFF0000)
   strip.show()
-  time.sleep(0.001)
+  #time.sleep(0.001)
   strip.clear_strip()
   time.sleep(0.050)
