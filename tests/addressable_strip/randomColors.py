@@ -5,14 +5,16 @@ import signal
 import random
 import sys
 
-
 strip = apa102.APA102(num_led=144, order='rgb')
 strip2 = apa102.APA102(num_led=144, order='rgb', mosi=20, sclk=21)
+motor = 27
+GPIO.setmode(27, GPIO.output)
 
 def cleanStrip(sig, frame):
   global strip, strip2
   strip.cleanup()
   strip2.cleanup()
+  GPIO.setup(motor,0)
   sys.exit(0)
 
 signal.signal(signal.SIGINT, cleanStrip)
@@ -28,5 +30,6 @@ def randomColors(strips, delay):
       strip.show()
     sleep(delay)
 
+GPIO.setup(motor,1)
 while True:
   randomColors((strip,strip2),1)
