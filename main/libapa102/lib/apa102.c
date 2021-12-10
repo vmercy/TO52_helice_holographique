@@ -87,9 +87,7 @@ void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
 
   }
   APA102_Begin();
-  for(i = 0; i < strip->n_leds; i++) {
-    wiringPiSPIDataRW(0, led_frame, 4);
-  }
+  wiringPiSPIDataRW(0, led_frame, 4);
   APA102_End();
 }
 
