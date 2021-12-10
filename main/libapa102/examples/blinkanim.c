@@ -10,7 +10,7 @@ int main() {
   struct APA102* strip = APA102_Init(48);
 
   //Run animation
-  struct APA102_Animation* anim = APA102_BlinkAnimation(strip, APA102_CreateFrame(31, 0xFF, 0x0, 0x0), 0, 120);
+  struct APA102_Animation* anim = APA102_BlinkAnimation(strip, APA102_CreateFrame(31, 0xFF, 0x0, 0x0), 0, 121);
 
   //Delay and kill
   delay(10000);
