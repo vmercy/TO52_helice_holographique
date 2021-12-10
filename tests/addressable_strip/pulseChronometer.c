@@ -1,4 +1,4 @@
-#include <wiringPi.h>
+//#include <wiringPi.h>
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -12,12 +12,13 @@ int main()
   //pinMode(sensor, INPUT);
 
   gettimeofday(&begin, 0);
-  sleep(1);
+  usleep(500000);
   gettimeofday(&end, 0);
 
+  long seconds = end.tv_sec - begin.tv_sec;
   long microseconds = end.tv_usec-begin.tv_usec;
-
-  printf("microseconds elapsed : %.3f", microseconds);
+  double elapsed = seconds*1e6 + microseconds;
+  printf("microseconds elapsed : %4.2f", elapsed);
 
   return 0;
 }
