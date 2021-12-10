@@ -17,7 +17,7 @@ int main()
 
   long microseconds = end.tv_usec-begin.tv_usec;
 
-  printf("microseconds elapsed : %4.2f", microseconds);
+  printf("microseconds elapsed : %.3f", microseconds);
 
   return 0;
 }
