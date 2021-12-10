@@ -1,20 +1,23 @@
 #include <wiringPi.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 int main()
 {
   const int sensor = 2;
-  struct timespec ts;
+  struct timeval begin, end;
   //unsigned long ts.tv_nsec
-  wiringPiSetup();
-  pinMode(sensor, INPUT);
+  //wiringPiSetup();
+  //pinMode(sensor, INPUT);
 
-  while (1)
-  {
-    
-  }
-  
+  gettimeofday(&begin, 0);
+  sleep(1);
+  gettimeofday(&end, 0);
+
+  long microseconds = end.tv_usec-begin.tv_usec;
+
+  printf("microseconds elapsed : %4.2f", microseconds);
 
   return 0;
 }
