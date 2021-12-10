@@ -42,7 +42,7 @@ void APA102_Begin() {
 
   for(i = 0; i < 4; i++) {
     buf[0] = 0x00;
-    wiringPiSPIDataRW(1, buf, 1);
+    wiringPiSPIDataRW(0, buf, 1);
   }
 }
 
@@ -52,7 +52,7 @@ void APA102_End() {
 
   for(i = 0; i < 4; i++) {
     buf[0] = 0xFF;
-    wiringPiSPIDataRW(1, buf, 1);
+    wiringPiSPIDataRW(0, buf, 1);
   }
 }
 
@@ -68,7 +68,7 @@ void APA102_WriteLED(struct APA102_Frame* led) {
   led_frame[2] = led->g;
   led_frame[3] = led->r;
 
-  wiringPiSPIDataRW(1, led_frame, 4);
+  wiringPiSPIDataRW(0, led_frame, 4);
 }
 
 void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
@@ -86,7 +86,7 @@ void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
     led_frame[2] = led->g;
     led_frame[3] = led->r;
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(0, led_frame, 4);
   }
   APA102_End();
 }
@@ -125,7 +125,7 @@ void APA102_Stripes(struct APA102* strip, struct APA102_Frame* led, int stripe_s
       led_frame[3] = 0x00;
     }
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(0, led_frame, 4);
 
     ctr++;
     if(ctr >= stripe_size + gap_size) {
@@ -185,7 +185,7 @@ void APA102_MultiStripes(struct APA102* strip, struct APA102_Frame** leds, int s
       led_frame[3] = 0x00;
     }
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(0, led_frame, 4);
 
     ctr++;
     if(ctr >= stripe_size + gap_size) {
