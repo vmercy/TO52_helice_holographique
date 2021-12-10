@@ -1,4 +1,4 @@
-//#include <wiringPi.h>
+#include <wiringPi.h>
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -7,12 +7,12 @@ int main()
 {
   const int sensor = 2;
   struct timeval begin, end;
-  //unsigned long ts.tv_nsec
-  //wiringPiSetup();
-  //pinMode(sensor, INPUT);
-
+  wiringPiSetup();
+  pinMode(sensor, INPUT);
+  while(!digitalRead(sensor));
   gettimeofday(&begin, 0);
-  usleep(500000);
+  while(digitalRead(sensor));
+  while(!digitalRead(sensor));
   gettimeofday(&end, 0);
 
   long seconds = end.tv_sec - begin.tv_sec;
