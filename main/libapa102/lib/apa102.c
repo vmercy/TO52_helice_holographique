@@ -79,13 +79,13 @@ void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
     led->brightness = 31;
   }
 
-  APA102_Begin();
   for(i = 0; i < strip->n_leds; i++) {
     led_frame[i][0] = 0b11100000 | (0b00011111 & led->brightness);
     led_frame[i][1] = led->b;
     led_frame[i][2] = led->g;
     led_frame[i][3] = led->r;
   }
+  APA102_Begin();
   for(i = 0; i < strip->n_leds; i++)
     wiringPiSPIDataRW(0, led_frame[i], 4);
   APA102_End();
