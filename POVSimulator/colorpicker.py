@@ -92,11 +92,11 @@ def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin =
   return points
 
 # Configuration variables
-nbEllipsesPerDiametralLine = 13
-imageFileName = 'logo_utbm_detoure.png'
+nbEllipsesPerDiametralLine = 2*48
+imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
-angleStep = 5
-zoomFactor = 100 #zoom factor in percent
+angleStep = 12
+zoomFactor = 90 #zoom factor in percent
 
 if __name__ == "__main__":
   sourceImg = Image.open(imageFileName)
@@ -105,7 +105,7 @@ if __name__ == "__main__":
   baseImgSize = imgMaxSize*100//zoomFactor
   centeredImage = Image.new('RGB', (baseImgSize,)*2,'black')
   
-  centeredImage.paste(sourceImg,((baseImgSize-sourceImg.size[0])//2,(baseImgSize-sourceImg.size[1])//2), mask=sourceImg)
+  centeredImage.paste(sourceImg,((baseImgSize-sourceImg.size[0])//2,(baseImgSize-sourceImg.size[1])//2))
   centeredImage.save('TEST.png')
 
   pickingPoints = getPickingPoints(baseImgSize, nbEllipsesPerDiametralLine, angleStep)
