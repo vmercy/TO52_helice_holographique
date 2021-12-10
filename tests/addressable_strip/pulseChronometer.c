@@ -9,9 +9,11 @@ int main()
   struct timeval begin, end;
   wiringPiSetup();
   pinMode(sensor, INPUT);
+  usleep(1000);
   while(!digitalRead(sensor));
   gettimeofday(&begin, 0);
   while(digitalRead(sensor));
+  usleep(1000);
   while(!digitalRead(sensor));
   gettimeofday(&end, 0);
 
