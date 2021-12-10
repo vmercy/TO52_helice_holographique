@@ -72,22 +72,22 @@ void APA102_WriteLED(struct APA102_Frame* led) {
 }
 
 void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
-  uint8_t led_frame[strip->n_leds][4];
+  uint8_t led_frame[4];
   int i;
 
   if(led->brightness > 31) {
     led->brightness = 31;
   }
 
-  for(i = 0; i < strip->n_leds; i++) {
-    led_frame[i][0] = 0b11100000 | (0b00011111 & led->brightness);
-    led_frame[i][1] = led->b;
-    led_frame[i][2] = led->g;
-    led_frame[i][3] = led->r;
-  }
   APA102_Begin();
+    led_frame[0] = 0b11100000 | (0b00011111 & led->brightness);
+    led_frame[1] = led->b;
+    led_frame[2] = led->g;
+    led_frame[3] = led->r;
+  /* for(i = 0; i < strip->n_leds; i++) {
+  } */
   for(i = 0; i < strip->n_leds; i++)
-    wiringPiSPIDataRW(0, led_frame[i], 4);
+    wiringPiSPIDataRW(0, led_frame, 4);
   APA102_End();
 
 }
