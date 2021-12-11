@@ -66,10 +66,10 @@ void* BlinkAnimHandler(void* udata) {
   while(1) {
     APA102_Fill(data->strip, data->led);
     APA102_Fill(data->strip2, data->led);
-    /* delayMicroseconds(data->timeOn);
+    delayMicroseconds(data->timeOn);
     if(*(data->anim->kill)) {
       break;
-    } */
+    }
     APA102_Fill(data->strip, APA102_CreateFrame(0x0, 0x0, 0x0, 0x0));
     APA102_Fill(data->strip2, APA102_CreateFrame(0x0, 0x0, 0x0, 0x0));
     delay(data->timeOff);
