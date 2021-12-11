@@ -9,8 +9,8 @@ int main()
 {
   // Initialize strip
   int sensorPin = 2;
-  pinMode(sensorPin, INPUT);
   wiringPiSetup();
+  pinMode(sensorPin, INPUT);
   struct APA102 *strip = APA102_Init(20, 0);
   struct APA102 *strip2 = APA102_Init(20, 1);
   struct APA102_Frame* LineFrame = APA102_CreateFrame(31, 0xFF, 0xFF, 0);
