@@ -70,6 +70,8 @@ def computePickingPointsPositionsOnDiametralLine(pickingAreaDiameter, nbPoints, 
     pointsPositions.append(((angle, -radialIndex),(pickingAreaDiameter/2-radial*sin(angle), pickingAreaDiameter/2-radial*cos(angle))))
   return pointsPositions
 
+#def addTrailArcs
+
 def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin = 0, angleMax = 180):
   """Builds 
 
@@ -95,7 +97,7 @@ def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin =
 nbEllipsesPerDiametralLine = 2*48
 imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
-angleStep = 12
+angleStep = 13
 zoomFactor = 90 #zoom factor in percent
 
 if __name__ == "__main__":
