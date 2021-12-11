@@ -19,11 +19,11 @@ struct APA102* APA102_Init(int, int);
   Base API functions for controlling single LEDs
 */
 //APA102_Begin(): Begin a write
-void APA102_Begin();
+void APA102_Begin(int);
 //APA102_End(): End a write
-void APA102_End();
+void APA102_End(int);
 //APA102_WriteLED(APA102_Frame): Write a single LED frame
-void APA102_WriteLED(struct APA102_Frame*);
+void APA102_WriteLED(struct APA102_Frame*, int);
 
 /*
   'high-level' functions for controlling the entire strip
