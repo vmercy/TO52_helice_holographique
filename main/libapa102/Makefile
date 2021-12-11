@@ -40,3 +40,6 @@ examples/multistripesanim: examples/multistripesanim.c
 
 examples/line: examples/line.c
 	gcc -L. -I./lib  -o examples/line examples/line.c -lwiringPi -lapa102 -lpthread
+
+examples/rainbow: examples/rainbow.c
+	gcc -L. -I./lib  -o examples/rainbow examples/rainbow.c -lwiringPi -lapa102 -lpthread
