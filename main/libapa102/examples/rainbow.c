@@ -5,7 +5,7 @@
 #include "apa102.h"
 #include <wiringPi.h>
 
-void writeFrame(strip, strip2, frame)
+void writeFrame(struct APA102* strip,struct  APA102* strip2,struct  APA102_Frame* frame)
 {
   APA102_Fill(strip, frame);
   APA102_Fill(strip2, frame);
