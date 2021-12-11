@@ -32,13 +32,21 @@ int main()
     if (digitalRead(sensorPin))
     {
       writeFrame(strip, strip2, red);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, orange);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, yellow);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, green);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, blue);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, indigo);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, violet);
+      delayMicroseconds(100);
       writeFrame(strip, strip2, offFrame);
+      delayMicroseconds(100);
     }
 
   }
