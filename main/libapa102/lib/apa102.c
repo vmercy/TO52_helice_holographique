@@ -8,6 +8,7 @@
 
 struct APA102 {
   int n_leds;
+  int interface;
 };
 
 struct APA102_Frame* APA102_CreateFrame(uint8_t brightness, uint8_t r, uint8_t g, uint8_t b) {
@@ -22,41 +23,42 @@ struct APA102_Frame* APA102_CreateFrame(uint8_t brightness, uint8_t r, uint8_t g
   return led;
 }
 
-struct APA102* APA102_Init(int n_leds) {
+struct APA102* APA102_Init(int n_leds, int interface) {
   struct APA102* strip;
 
   strip = (struct APA102*)malloc(sizeof(struct APA102));
   strip->n_leds = n_leds;
+  strip->interface = interface;
 
   wiringPiSetup();
-  if(wiringPiSPISetup(1, 6000000) < 0) {
+  if(wiringPiSPISetup(interface, 6000000) < 0) {
     printf("WiringPiSPISetup failed\n");
     return 0;
   }
   return strip;
 }
 
-void APA102_Begin() {
+void APA102_Begin(int interface) {
   uint8_t buf[1];
   int i;
 
   for(i = 0; i < 4; i++) {
     buf[0] = 0x00;
-    wiringPiSPIDataRW(1, buf, 1);
+    wiringPiSPIDataRW(interface, buf, 1);
   }
 }
 
-void APA102_End() {
+void APA102_End(int interface) {
   uint8_t buf[1];
   int i;
 
   for(i = 0; i < 4; i++) {
     buf[0] = 0xFF;
-    wiringPiSPIDataRW(1, buf, 1);
+    wiringPiSPIDataRW(interface, buf, 1);
   }
 }
 
-void APA102_WriteLED(struct APA102_Frame* led) {
+void APA102_WriteLED(struct APA102_Frame* led, int interface) {
   uint8_t led_frame[4];
 
   if(led->brightness > 31) {
@@ -68,7 +70,7 @@ void APA102_WriteLED(struct APA102_Frame* led) {
   led_frame[2] = led->g;
   led_frame[3] = led->r;
 
-  wiringPiSPIDataRW(1, led_frame, 4);
+  wiringPiSPIDataRW(interface, led_frame, 4);
 }
 
 void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
@@ -79,16 +81,16 @@ void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
     led->brightness = 31;
   }
 
-  APA102_Begin();
+  APA102_Begin(strip->interface);
   for(i = 0; i < strip->n_leds; i++) {
     led_frame[0] = 0b11100000 | (0b00011111 & led->brightness);
     led_frame[1] = led->b;
     led_frame[2] = led->g;
     led_frame[3] = led->r;
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(strip->interface, led_frame, 4);
   }
-  APA102_End();
+  APA102_End(strip->interface);
 }
 
 void APA102_Stripes(struct APA102* strip, struct APA102_Frame* led, int stripe_size, int gap_size, int offset) {
@@ -111,7 +113,7 @@ void APA102_Stripes(struct APA102* strip, struct APA102_Frame* led, int stripe_s
     led->brightness = 31;
   }
 
-  APA102_Begin();
+  APA102_Begin(strip->interface);
   for(i = 0; i < strip->n_leds; i++) {
     if(ctr < stripe_size) {
       led_frame[0] = 0b11100000 | (0b00011111 & led->brightness);
@@ -125,14 +127,14 @@ void APA102_Stripes(struct APA102* strip, struct APA102_Frame* led, int stripe_s
       led_frame[3] = 0x00;
     }
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(strip->interface, led_frame, 4);
 
     ctr++;
     if(ctr >= stripe_size + gap_size) {
       ctr = 0;
     }
   }
-  APA102_End();
+  APA102_End(strip->interface);
 }
 
 void APA102_MultiStripes(struct APA102* strip, struct APA102_Frame** leds, int stripe_size, int gap_size, int offset, int coffset) {
@@ -170,7 +172,7 @@ void APA102_MultiStripes(struct APA102* strip, struct APA102_Frame** leds, int s
     }
   }
 
-  APA102_Begin();
+  APA102_Begin(strip->interface);
   for(i = 0; i < strip->n_leds; i++) {
 
     if(ctr < stripe_size) {
@@ -185,7 +187,7 @@ void APA102_MultiStripes(struct APA102* strip, struct APA102_Frame** leds, int s
       led_frame[3] = 0x00;
     }
 
-    wiringPiSPIDataRW(1, led_frame, 4);
+    wiringPiSPIDataRW(strip->interface, led_frame, 4);
 
     ctr++;
     if(ctr >= stripe_size + gap_size) {
@@ -196,5 +198,5 @@ void APA102_MultiStripes(struct APA102* strip, struct APA102_Frame** leds, int s
         }
     }
   }
-  APA102_End();
+  APA102_End(strip->interface);
 }

@@ -13,7 +13,7 @@ struct APA102_Animation;
 struct APA102_Frame* APA102_CreateFrame(uint8_t, uint8_t, uint8_t, uint8_t);
 
 //APA102_Init(int n_leds): Initializes a LED-strip with the given number of LEDS
-struct APA102* APA102_Init(int);
+struct APA102* APA102_Init(int, int);
 
 /*
   Base API functions for controlling single LEDs
@@ -41,7 +41,7 @@ void APA102_MultiStripes(struct APA102*, struct APA102_Frame**, int, int, int, i
 //APA102_KillAnimation(struct APA102_Animation* anim): Kills a running animation
 void APA102_KillAnimation(struct APA102_Animation*);
 //APA102_BlinkAnimation(APA102* strip, APA102_Frame* led, int interval): A blinking animation using the given color and interval
-struct APA102_Animation* APA102_BlinkAnimation(struct APA102*, struct APA102_Frame*, int, int);
+struct APA102_Animation* APA102_BlinkAnimation(struct APA102*, struct APA102*, struct APA102_Frame*, int, int);
 //APA102_PulseAnimation(APA102* strip, APA102_Frame* led, int interval): A pulsing animation using the given color and interval
 struct APA102_Animation* APA102_PulseAnimation(struct APA102*, struct APA102_Frame*, int);
 //APA102_StripesAnimation(APA102* strip, APA102_Frame* led, int interval, int stripe_size, int gap_size, int direction)

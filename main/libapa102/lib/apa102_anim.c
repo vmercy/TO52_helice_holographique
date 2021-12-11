@@ -21,6 +21,7 @@ struct APA102_Animation {
 struct BlinkAnimData {
   struct APA102_Animation* anim;
   struct APA102* strip;
+  struct APA102* strip2;
   struct APA102_Frame* led;
 
   int timeOn, timeOff;
@@ -64,11 +65,13 @@ void* BlinkAnimHandler(void* udata) {
   data = (struct BlinkAnimData*)udata;
   while(1) {
     APA102_Fill(data->strip, data->led);
+    APA102_Fill(data->strip2, data->led);
     delayMicroseconds(data->timeOn);
     if(*(data->anim->kill)) {
       break;
     }
     APA102_Fill(data->strip, APA102_CreateFrame(0x0, 0x0, 0x0, 0x0));
+    APA102_Fill(data->strip2, APA102_CreateFrame(0x0, 0x0, 0x0, 0x0));
     delay(data->timeOff);
     if(*(data->anim->kill)) {
       break;
@@ -235,7 +238,7 @@ void* FadeAnimHandler(void* udata) {
   
 }
 
-struct APA102_Animation* APA102_BlinkAnimation(struct APA102* strip, struct APA102_Frame* led, int timeOn, int timeOff) {
+struct APA102_Animation* APA102_BlinkAnimation(struct APA102* strip, struct APA102* strip2, struct APA102_Frame* led, int timeOn, int timeOff) {
   struct APA102_Animation* anim;
   struct BlinkAnimData* data;
 
@@ -244,6 +247,7 @@ struct APA102_Animation* APA102_BlinkAnimation(struct APA102* strip, struct APA1
 
   data->anim = anim;
   data->strip = strip;
+  data->strip2 = strip2;
   data->led = led;
   data->timeOn = timeOn;
   data->timeOff = timeOff;
