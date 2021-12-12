@@ -4,6 +4,12 @@
 
 #include "apa102.h"
 #include <wiringPi.h>
+#include <stdio.h>
+#include <signal.h>
+
+#define SENSOR_PIN 2
+#define MOTOR_PIN 22
+#define BUZZER_PIN 3
 
 void writeFrame(struct APA102* strip,struct  APA102* strip2,struct  APA102_Frame* frame)
 {
@@ -11,12 +17,29 @@ void writeFrame(struct APA102* strip,struct  APA102* strip2,struct  APA102_Frame
   APA102_Fill(strip2, frame);
 }
 
+void handle_sigint()
+{
+  struct APA102 *strip = APA102_Init(48, 0);
+  struct APA102 *strip2 = APA102_Init(48, 1);
+  struct APA102_Frame* offFrame = APA102_CreateFrame(0x00, 0x00, 0x00, 0x00);
+  writeFrame(strip, strip2, offFrame);
+  digitalWrite(MOTOR_PIN, LOW);
+}
+
+void startMotor(){
+  digitalWrite(MOTOR_PIN, HIGH);
+}
+
 int main()
 {
   // Initialize strip
-  int sensorPin = 2;
+  int sectorDelay = 0;
+  print("Saisir un delai (en microsecondes) entre chaque secteur : ");
+  scanf("%i",&sectorDelay);
   wiringPiSetup();
-  pinMode(sensorPin, INPUT);
+  pinMode(SENSOR_PIN, INPUT);
+  pinMode(MOTOR_PIN, OUTPUT);
+  startMotor();
   struct APA102 *strip = APA102_Init(48, 0);
   struct APA102 *strip2 = APA102_Init(48, 1);
   struct APA102_Frame* offFrame = APA102_CreateFrame(0x00, 0x00, 0x00, 0x00);
@@ -29,24 +52,24 @@ int main()
   struct APA102_Frame* violet = APA102_CreateFrame(31, 139, 0, 255);
   while (1)
   {
-    if (digitalRead(sensorPin))
+    if (digitalRead(SENSOR_PIN))
     {
       writeFrame(strip, strip2, red);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, orange);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, yellow);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, green);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, blue);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, indigo);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, violet);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
       writeFrame(strip, strip2, offFrame);
-      delayMicroseconds(100);
+      delayMicroseconds(sectorDelay);
     }
 
   }
