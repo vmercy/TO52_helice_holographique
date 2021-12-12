@@ -95,11 +95,10 @@ int main()
     if (digitalRead(SENSOR_PIN))
     {
       for (uint8_t sector = 0; sector < NB_SECTORS; sector++)
-        for (uint8_t radial = 0; radial < NB_LEDS_PER_STRIP; radial++)
-        {
+      {
           APA102_FillWithDifferentColors(strip, colorsForStrip[sector]);
           APA102_FillWithDifferentColors(strip2, colorsForStrip2[sector]);
-        }
+      }
       writeFrame(strip, strip2, offFrame);
     }
   }
