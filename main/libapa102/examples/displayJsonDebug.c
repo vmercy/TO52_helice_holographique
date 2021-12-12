@@ -2,9 +2,10 @@
   blinkanim.c: Display a line
 */
 
-#include "apa102.h"
+//#include "apa102.h"
 #include <wiringPi.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <signal.h>
 
 #define SENSOR_PIN 2
@@ -20,7 +21,7 @@
 
 #define NB_COLOR_POINTS (NB_SECTORS*NB_LEDS_PER_STRIP*2)
 
-void writeFrameAllStrips(struct APA102* strip,struct  APA102* strip2, uint8_t colorsStrip[][3], uint8_t colorsStrip2[][3])
+/* void writeFrameAllStrips(struct APA102* strip,struct  APA102* strip2, uint8_t colorsStrip[][3], uint8_t colorsStrip2[][3])
 {
   for(uint8_t i = 0; i<NB_LEDS_PER_STRIP; i++)
   {
@@ -46,12 +47,12 @@ void handle_sigint()
 
 void startMotor(){
   digitalWrite(MOTOR_PIN, HIGH);
-}
+} */
 
 int main()
 {
   // Initialize strip
-  signal(SIGINT, handle_sigint);
+  /* signal(SIGINT, handle_sigint);
 
   wiringPiSetup();
   pinMode(SENSOR_PIN, INPUT);
@@ -64,7 +65,7 @@ int main()
   strip = APA102_Init(NB_LEDS_PER_STRIP, 0);
   strip2 = APA102_Init(NB_LEDS_PER_STRIP, 1);
   struct APA102_Frame* red = APA102_CreateFrame(31, 255, 0, 0);
-  struct APA102_Frame* green = APA102_CreateFrame(31, 0, 255, 0);
+  struct APA102_Frame* green = APA102_CreateFrame(31, 0, 255, 0); */
 
   uint8_t colorsForStrip[NB_SECTORS][NB_LEDS_PER_STRIP][3];
   uint8_t colorsForStrip2[NB_SECTORS][NB_LEDS_PER_STRIP][3];
@@ -89,7 +90,9 @@ int main()
     }
   }
 
-  while (1)
+  printf('ok');
+
+  /* while (1)
   {
     if (digitalRead(SENSOR_PIN))
     {
@@ -97,5 +100,5 @@ int main()
         writeFrameAllStrips(strip, strip2, colorsForStrip, colorsForStrip2);
       writeFrame(strip, strip2, offFrame);
     }
-  }
+  } */
 }
