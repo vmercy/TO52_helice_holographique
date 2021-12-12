@@ -94,7 +94,7 @@ int main()
     if (digitalRead(SENSOR_PIN))
     {
       for(uint8_t i=0; i<NB_SECTORS; i++)
-        writeFrameAllStrips(strip, strip2, colorsForStrip, colorsForStrip2);
+        writeFrameAllStrips(strip, strip2, colorsForStrip[i], colorsForStrip2[i]);
       writeFrame(strip, strip2, offFrame);
     }
   }
