@@ -124,7 +124,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
 
 # Configuration variables
 nbEllipsesPerDiametralLine = 2*48
-imageFileName = 'echelon.jpg'
+imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
 nbSectors = 12 #number of displaying sectors
 angleStep = int(180/nbSectors)
