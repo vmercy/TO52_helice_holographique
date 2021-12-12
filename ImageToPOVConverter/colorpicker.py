@@ -124,7 +124,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
 
 # Configuration variables
 nbEllipsesPerDiametralLine = 2*48
-imageFileName = 'logo_utbm.png'
+imageFileName = 'echelon.jpg'
 outputFileName = 'result_picking.png'
 nbSectors = 10 #number of displaying sectors
 angleStep = int(180/nbSectors)
@@ -143,5 +143,5 @@ if __name__ == "__main__":
   pickingPoints = getPickingPoints(baseImgSize, nbEllipsesPerDiametralLine, angleStep)
   pickedColors = pickColors(pickingPoints, centeredImage)
 
-  savePickedColors(imageFileName.replace('.png','.h'), pickedColors, nbSectors)
+  savePickedColors('/home/valentin/TO52_helice_holographique/main/libapa102/examples/logo_utbm.h', pickedColors, nbSectors)
   renderPickedPointsPreview(outputFileName, pickedColors, 10)
