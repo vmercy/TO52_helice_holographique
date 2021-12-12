@@ -126,7 +126,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
 nbEllipsesPerDiametralLine = 2*48
 imageFileName = 'echelon.jpg'
 outputFileName = 'result_picking.png'
-nbSectors = 10 #number of displaying sectors
+nbSectors = 12 #number of displaying sectors
 angleStep = int(180/nbSectors)
 zoomFactor = 90 #zoom factor in percent
 
