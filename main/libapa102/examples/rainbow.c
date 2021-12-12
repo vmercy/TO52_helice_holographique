@@ -41,8 +41,8 @@ int main()
   pinMode(SENSOR_PIN, INPUT);
   pinMode(MOTOR_PIN, OUTPUT);
   startMotor();
-  struct APA102 *strip = APA102_Init(48, 0);
-  struct APA102 *strip2 = APA102_Init(48, 1);
+  struct APA102 *strip = APA102_Init(20, 0);
+  struct APA102 *strip2 = APA102_Init(20, 1);
   struct APA102_Frame* offFrame = APA102_CreateFrame(0x00, 0x00, 0x00, 0x00);
   struct APA102_Frame* red = APA102_CreateFrame(31, 255, 0, 0);
   struct APA102_Frame* orange = APA102_CreateFrame(31, 255, 127, 0);
