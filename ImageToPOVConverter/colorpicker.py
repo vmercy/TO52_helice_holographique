@@ -113,6 +113,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
       thetaIndex+=1
     lastTheta = pickedColor[0][0][0]
     cleanedPickedColors.append((thetaIndex, pickedColor[0][0][1], pickedColor[1]))
+  cleanedPickedColors.sort(key=lambda x: (x[0], x[1]))
   with open(filename, 'w') as outfile:
     json.dump(cleanedPickedColors, outfile)
   return cleanedPickedColors

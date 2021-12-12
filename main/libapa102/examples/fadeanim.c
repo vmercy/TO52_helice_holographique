@@ -6,7 +6,7 @@
 
 int main() {
   //Initialize strip
-  struct APA102* strip = APA102_Init(60);
+  struct APA102* strip = APA102_Init(60, 0);
 
   //Create the colors array (must be NULL-terminated)
   struct APA102_Frame* colors[5];

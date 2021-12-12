@@ -1,5 +1,9 @@
 /*
   blinkanim.c: Display a line
+
+  RESULT OF COUNT :
+    - 20 sectors for 20 leds
+    - 12 sectors for 48 leds
 */
 
 #include "apa102.h"
