@@ -33,6 +33,7 @@ void startMotor(){
 int main()
 {
   // Initialize strip
+  signal(SIGINT, handle_sigint);
   int sectorDelay = 0;
   printf("Saisir un delai (en microsecondes) entre chaque secteur : ");
   scanf("%i",&sectorDelay);
