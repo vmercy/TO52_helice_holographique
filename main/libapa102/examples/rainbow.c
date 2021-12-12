@@ -34,7 +34,7 @@ int main()
 {
   // Initialize strip
   int sectorDelay = 0;
-  print("Saisir un delai (en microsecondes) entre chaque secteur : ");
+  printf("Saisir un delai (en microsecondes) entre chaque secteur : ");
   scanf("%i",&sectorDelay);
   wiringPiSetup();
   pinMode(SENSOR_PIN, INPUT);
