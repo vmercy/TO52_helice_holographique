@@ -112,10 +112,14 @@ def savePickedColors(filename, pickedColors, nbSectors):
     if pickedColor[0][0][0] != lastTheta:
       thetaIndex+=1
     lastTheta = pickedColor[0][0][0]
-    cleanedPickedColors.append((thetaIndex, pickedColor[0][0][1], pickedColor[1]))
+    cleanedPickedColors.append((thetaIndex, pickedColor[0][0][1], pickedColor[1][0], pickedColor[1][1], pickedColor[1][2]))
   cleanedPickedColors.sort(key=lambda x: (x[0], x[1]))
+  fileContent = '#define COLOR_POINTS \\'+'\n{\\\n'
+  for cleanedPickedColor in cleanedPickedColors:
+    fileContent+='{ %i, %i, %i, %i, %i },\\\n'%cleanedPickedColor
+  fileContent+='}'
   with open(filename, 'w') as outfile:
-    json.dump(cleanedPickedColors, outfile)
+    outfile.write(fileContent)
   return cleanedPickedColors
 
 # Configuration variables
@@ -139,5 +143,5 @@ if __name__ == "__main__":
   pickingPoints = getPickingPoints(baseImgSize, nbEllipsesPerDiametralLine, angleStep)
   pickedColors = pickColors(pickingPoints, centeredImage)
 
-  savePickedColors(imageFileName.replace('.png','.json'), pickedColors, nbSectors)
+  savePickedColors(imageFileName.replace('.png','.h'), pickedColors, nbSectors)
   renderPickedPointsPreview(outputFileName, pickedColors, 10)

@@ -93,6 +93,22 @@ void APA102_Fill(struct APA102* strip, struct APA102_Frame* led) {
   APA102_End(strip->interface);
 }
 
+void APA102_FillWithDifferentColors(struct APA102* strip, uint8_t colors[][3]) {
+  uint8_t led_frame[4];
+  int i;
+
+  APA102_Begin(strip->interface);
+  for(i = 0; i < strip->n_leds; i++) {
+    led_frame[0] = 0b11100000 | (0b00011111 & 31);
+    led_frame[1] = colors[i][2];
+    led_frame[2] = colors[i][1];
+    led_frame[3] = colors[i][0];
+
+    wiringPiSPIDataRW(strip->interface, led_frame, 4);
+  }
+  APA102_End(strip->interface);
+}
+
 void APA102_Stripes(struct APA102* strip, struct APA102_Frame* led, int stripe_size, int gap_size, int offset) {
   uint8_t led_frame[4];
   int i, ctr;

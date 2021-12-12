@@ -30,6 +30,8 @@ void APA102_WriteLED(struct APA102_Frame*, int);
 */
 //APA102_Fill(APA102* strip, APA102_Frame led): Fill the entire strip with a single color
 void APA102_Fill(struct APA102*, struct APA102_Frame*);
+
+void APA102_FillWithDifferentColors(struct APA102* strip, uint8_t colors[][3]);
 //APA102_Stripes(APA102* strip, APA102_Frame led, int stripe_size, int gap_size, int offset): Fill the entire strip with stripes and holes in them
 void APA102_Stripes(struct APA102*, struct APA102_Frame*, int, int, int);
 //APA102_MultiStripes(APA102* strip, APA102_Frame* leds, int stripe_size, int gap_size, int offset, int color_offset): Fill the intire strip with multi-colored stripes and holes in them. Colors are contained in a NULL-terminated array

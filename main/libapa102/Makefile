@@ -46,3 +46,6 @@ examples/rainbow: examples/rainbow.c
 
 examples/countMaxSectors: examples/countMaxSectors.c
 	gcc -L. -I./lib  -o examples/countMaxSectors examples/countMaxSectors.c -lwiringPi -lapa102 -lpthread
+
+examples/displayJson: examples/displayJson.c
+	gcc -L. -I./lib  -o examples/displayJson examples/displayJson.c -lwiringPi -lapa102 -lpthread
