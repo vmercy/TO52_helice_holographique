@@ -123,7 +123,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
   return cleanedPickedColors
 
 # Configuration variables
-nbEllipsesPerDiametralLine = 2*48
+nbEllipsesPerDiametralLine = 2*20
 imageFileName = 'mcdo.png'
 outputFileName = 'result_picking.png'
 nbSectors = 12 #number of displaying sectors
