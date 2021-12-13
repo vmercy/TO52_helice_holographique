@@ -123,10 +123,10 @@ def savePickedColors(filename, pickedColors, nbSectors):
   return cleanedPickedColors
 
 # Configuration variables
-nbEllipsesPerDiametralLine = 2*20
+nbEllipsesPerDiametralLine = 2*25
 imageFileName = 'mcdo.png'
 outputFileName = 'result_picking.png'
-nbSectors = 33 #number of displaying sectors
+nbSectors = 30 #number of displaying sectors
 angleStep = int(180/nbSectors)
 zoomFactor = 100 #zoom factor in percent
 
