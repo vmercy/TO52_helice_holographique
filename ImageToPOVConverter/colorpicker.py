@@ -126,7 +126,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
 nbEllipsesPerDiametralLine = 2*35
 imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
-nbSectors = 12 #number of displaying sectors
+nbSectors = 14 #number of displaying sectors
 angleStep = int(180/nbSectors)
 zoomFactor = 90 #zoom factor in percent
 
