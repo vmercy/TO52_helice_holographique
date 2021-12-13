@@ -124,11 +124,11 @@ def savePickedColors(filename, pickedColors, nbSectors):
 
 # Configuration variables
 nbEllipsesPerDiametralLine = 2*25
-imageFileName = 'mcdo.png'
+imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
-nbSectors = 30 #number of displaying sectors
+nbSectors = 25 #number of displaying sectors
 angleStep = int(180/nbSectors)
-zoomFactor = 100 #zoom factor in percent
+zoomFactor = 90 #zoom factor in percent
 
 if __name__ == "__main__":
   sourceImg = Image.open(imageFileName)

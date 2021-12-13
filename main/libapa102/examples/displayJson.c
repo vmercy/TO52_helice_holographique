@@ -15,7 +15,7 @@
 
 #include "logo_utbm.h"
 
-#define NB_SECTORS 30
+#define NB_SECTORS 25
 #define NB_LEDS_PER_STRIP 25
 
 #define NB_COLOR_POINTS (NB_SECTORS * NB_LEDS_PER_STRIP * 2)
