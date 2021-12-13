@@ -123,7 +123,7 @@ def savePickedColors(filename, pickedColors, nbSectors):
   return cleanedPickedColors
 
 # Configuration variables
-nbEllipsesPerDiametralLine = 2*25
+nbEllipsesPerDiametralLine = 2*35
 imageFileName = 'logo_utbm.png'
 outputFileName = 'result_picking.png'
 nbSectors = 20 #number of displaying sectors
