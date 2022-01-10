@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hélice holographique</title>
+    <!-- TODO: add favicon -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style/style.css') }}">
+</head>
+
+<body>
+    <h1>Afficher une image</h1>
+    <div class="border-top pt-3">
+        <div class="content-section">
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+        </div>
+        <div class="content-section">
+            <form action="/" method="post" enctype=multipart/form-data>
+                <p>Pour afficher une image sur l'hélice :
+                    <ol>
+                        <li>Importer l'image : <input required type="file" name="image_to_display" /></li>
+                        <li>Choisir le nombre de LED par pale (résolution radiale) : <input required type="number" min="1" max="48" value="35" placeholder="35" name="radial_resolution" /></li>
+                        <li>Choisir le nombre de secteurs (résolution angulaire) : <input required type="number" min="1" max="50" value="16" placeholder="16" name="angular_resolution" /></li>
+                        <input type="submit" value="Prévisualiser" />
+                    </ol>
+                </p>
+            </form>
+        </div>
+        {%if RUN_ALLOWED %}
+        <div class="content-section">
+            <img src="{{ url_for('download_file', filename=preview_url) }}" />
+            <form action="/" method="post">
+                <input type="hidden" name="command" value="run_prop">
+                <input type="submit" value="Démarrer l'hélice">
+            </form>
+            <form action="/" method="post">
+                <input type="hidden" name="command" value="stop_prop">
+                <input type="submit" value="Arrêter l'hélice">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
