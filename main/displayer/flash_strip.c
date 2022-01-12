@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
   if(!isRed && !isYellow && !isGreen)
   {
-    print("Unauthorized color supplied. Authorized colors are : red, yellow and green");
+    printf("Unauthorized color supplied. Authorized colors are : red, yellow and green");
     exit(0);
   }
 
