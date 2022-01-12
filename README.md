@@ -59,6 +59,6 @@ ifconfig
 sudo reboot now
 ```
 TODO: compiler displayer.c et flash_strip.c avec make
-
+#TODO: creer dossier img_uploaded
 ## Utilisation
 8. Désormais, à chaque redémarrage l'hélice peut être commandée via un autre PC sur le même réseau en saisissant son adresse IP (voir étape 5 ci-dessus) dans le navigateur.

@@ -67,7 +67,7 @@ def flashStrip(color, delay):
   """
   if color not in ['red', 'yellow', 'green']:
     return
-  #TODO: call(["./displayer/bin/flash_strip",color,str(delay)])
+  call(["./displayer/bin/flash_strip",color,str(delay)])
 
 def getImageToDisplay():
   """Gets the image to be displayed from USB key
