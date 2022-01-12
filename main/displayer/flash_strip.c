@@ -28,7 +28,7 @@ void writeFrame(struct APA102 *strip, struct APA102 *strip2, struct APA102_Frame
 
 int main(int argc, char *argv[])
 {
-   if( argc == 3 ) {
+   /* if( argc == 3 ) {
       printf("The color argument supplied is %s and delay is %s\n", argv[1], argv[2]);
    }
    else if( argc > 3 ) {
@@ -38,17 +38,17 @@ int main(int argc, char *argv[])
    else {
       printf("2 argument expected : color as string and delay as integer.\n");
       exit(0);
-   }
+   } */
 
-   printf("before delay assignment");
+   printf("before delay assignment\n");
 
    int delay = atoi(argv[2]);
 
-   printf("after delay assignment");
+   printf("after delay assignment\n");
 
    if(delay<0)
    {
-     printf("Delay must be non-negative.");
+     printf("Delay must be non-negative.\n");
      exit(0);
    }
 
