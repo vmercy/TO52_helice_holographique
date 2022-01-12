@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
    int delay = atoi(argv[2]);
 
-   printf("after delay assignment\n");
+   printf("after delay assignment : delay = %i\n",delay);
 
    if(delay<0)
    {
