@@ -25,14 +25,21 @@
                         <li>Importer l'image : <input required type="file" name="image_to_display" /></li>
                         <li>Choisir le nombre de LED par pale (résolution radiale) : <input required type="number" min="1" max="48" value="35" placeholder="35" name="radial_resolution" /></li>
                         <li>Choisir le nombre de secteurs (résolution angulaire) : <input required type="number" min="1" max="50" value="16" placeholder="16" name="angular_resolution" /></li>
-                        <input type="submit" value="Prévisualiser" />
+                        <li><input type="submit" value="Prévisualiser le rendu" /></li>
+                        {%if RUN_ALLOWED %}
+                        <div class="content-section">
+                            <li>Vérifier le rendu :
+                                <img src="/static/preview.png" />
+                            </li>
+                            <li>Démarrer/arrêter l'hélice :
+
+                            </li>
+                        </div>
+                        {% endif %}
                     </ol>
                 </p>
             </form>
-        </div>
-        {%if RUN_ALLOWED %}
-        <div class="content-section">
-            <img src="{{ url_for('download_file', filename=preview_url) }}" />
+            {%if RUN_ALLOWED %}
             <form action="/" method="post">
                 <input type="hidden" name="command" value="run_prop">
                 <input type="submit" value="Démarrer l'hélice">
@@ -41,9 +48,15 @@
                 <input type="hidden" name="command" value="stop_prop">
                 <input type="submit" value="Arrêter l'hélice">
             </form>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
+    <footer>
+        <div class="page-footer font-small">
+            <i>Interface réalisée par <a href="mailto:valentin.mercy@utbm.fr">Valentin Mercy</a> dans le cadre de l'UV TO52 de l'<a
+          href="https://www.utbm.fr" target="_blank">Université de Technologie de Belfort-Montbéliard</a>.</i>
+        </div>
+    </footer>
 </body>
 
 </html>

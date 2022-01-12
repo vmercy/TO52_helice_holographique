@@ -22,33 +22,43 @@ Il suffit ensuite de suivre les étapes suivantes via un terminal :
 sudo raspi-config
 Choisir "2. Network Options", saisir le SSID et le mot de passe et valider
 ```
-
-1. Cloner le dépôt Git sur celle-ci
+2. Cloner le dépôt Git sur celle-ci
 ```
 git clone https://github.com/vmercy/TO52_helice_holographique.git
 ```
-3. Installer la version modifiée de WiringPi
+3. Créer le fichier d'environnement ```.env``` :
+```
+cd main/web-server
+nano .env
+```
+Et écrire à l'intérieur du fichier : 
+```
+flask_secret = "<INSERER_CARACTERES_ALEATOIRES>"
+```
+Enregistrer et quitter le fichier : Ctrl + X et "Oui"
+4. Installer la version modifiée de WiringPi
 ```
 cd CustomWiringPi
 make clean
 make install
 ```
-4. Installer python flask pour Python 3
+5. Installer python flask pour Python 3
 ```
 sudo pip3 install flask python-dotenv
 ```
-5. Afficher l'adresse IP de la Raspberry sur le réseau : 
+6. Afficher et prendre note de l'adresse IP de la Raspberry sur le réseau : 
 ```
 ifconfig
 ```
-6. Installer le service systemd :
+7. Installer le service systemd :
 ```
-
+#TODO
 ```
-7. Redémarrer la raspberry
+8. Redémarrer la raspberry
 ```
 sudo reboot now
 ```
+TODO: compiler displayer.c et flash_strip.c avec make
 
 ## Utilisation
 8. Désormais, à chaque redémarrage l'hélice peut être commandée via un autre PC sur le même réseau en saisissant son adresse IP (voir étape 5 ci-dessus) dans le navigateur.

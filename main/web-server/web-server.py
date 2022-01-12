@@ -1,34 +1,100 @@
 """Web server script
 """
+
 from logging import warning
 from dotenv import load_dotenv
-load_dotenv()
 import os
 from flask import Flask, render_template, url_for, request, flash, redirect, send_from_directory
 from werkzeug.utils import secure_filename
+from time import sleep
+import RPi.GPIO as GPIO
+from buzzer import Buzzer
+from subprocess import call
+import signal
+import sys
+
+load_dotenv()
+
+def sigint_handler(sig, frame):
+  """Handler for SIGINT signal
+
+  Args:
+      sig (signal): signal received
+      frame (frame): unused
+  """
+  buzz.error()
+  stopDisplay(True)
+  sys.exit(0)
+
+signal.signal(signal.SIGINT, sigint_handler) #associate SIGINT with its handler
 
 UPLOAD_FOLDER = '../img'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 RADIAL_RESOLUTION_BOUNDS = {'min':1,'max':48}
 ANGULAR_RESOLUTION_BOUNDS = {'min':1,'max':50}
 
+RUN_ALLOWED = False
+
+BUZZER_PIN = 22 #BCM TODO: check 17 otherwise
+MOTOR_PIN = 6 #BCM
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BUZZER_PIN, GPIO.OUT)
+GPIO.setup(MOTOR_PIN, GPIO.OUT)
+
+buzz = Buzzer(BUZZER_PIN)
+buzz.setEnable(True)
+
+def startSequence():
+  """Play a visual and sonor alert to make sure that display is alive
+  """
+  stopDisplay()
+  buzz.start()
+
+
+def warnBeforeStart():
+  """Play a visual and sonor alert before starting the propeller for safety reasons
+  """
+
+
+
+def getImageToDisplay():
+  """Gets the image to be displayed from USB key
+  """
+  pass
+
+def startDisplay():
+  """Starts motor
+  """
+  warnBeforeStart()
+
+def stopDisplay(skipBuzz = False):
+  """Stops display motor
+
+  Args:
+      skipBuzz (bool): If true, buzzer won't play any sound
+  """
+  if not skipBuzz:
+    buzz.shutDown()
+  
+
+def allowed_file(filename):
+  """Evaluates whether the filename can be accepted or not
+
+  Args:
+      filename (string): user input filename
+
+  Returns:
+      bool: True if filename is accepter, False otherwise
+  """
+  global ALLOWED_EXTENSIONS
+  return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+startSequence()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get("flask_secret")
-
-RUN_ALLOWED = False
-
-def run_prop():
-  #TODO
-  pass
-
-def stop_prop():
-  #TODO
-  pass
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
@@ -40,11 +106,11 @@ def home():
   if request.method == 'POST':
     if RUN_ALLOWED:
       if request.form.get('command') == 'run_prop':
-        run_prop()
+        startDisplay()
         flash('Hélice démarrée avec succès','success')
         return render_template('index.html',preview_url="preview.png", RUN_ALLOWED = RUN_ALLOWED)
       elif request.form.get('command') == 'stop_prop':
-        stop_prop()
+        stopDisplay()
         flash('Hélice arrêtée avec succès','success')
         return render_template('index.html',preview_url="preview.png", RUN_ALLOWED = RUN_ALLOWED)
     RUN_ALLOWED = False
