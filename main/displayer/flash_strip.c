@@ -40,21 +40,19 @@ int main(int argc, char *argv[])
       exit(0);
    }
 
-   printf('before delay assignment');
+   printf("before delay assignment");
 
+   int delay = atoi(argv[2]);
 
-
-   /* int delay = atoi(argv[2]);
-
-   printf('after delay assignment');
+   printf("after delay assignment");
 
    if(delay<0)
    {
-     printf('Delay must be non-negative.');
+     printf("Delay must be non-negative.");
      exit(0);
    }
 
-   printf('Im here');
+   printf("Im here");
 
    int isRed = abs(strcmp(argv[1], "red"));
    int isYellow = abs(strcmp(argv[1], "yellow"));
@@ -79,5 +77,5 @@ int main(int argc, char *argv[])
 
   sleep(delay);
 
-  writeFrame(strip, strip2, offFrame); */
+  writeFrame(strip, strip2, offFrame);
 }
