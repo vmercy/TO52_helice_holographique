@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
      exit(0);
    }
 
+   printf('Im here');
+
    int isRed = abs(strcmp(argv[1], "red"));
    int isYellow = abs(strcmp(argv[1], "yellow"));
    int isGreen = abs(strcmp(argv[1], "green"));
