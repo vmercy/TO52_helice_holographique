@@ -16,4 +16,4 @@ displayer: displayer.c
 	gcc -L. -I./lib  -o bin/displayer displayer.c -lwiringPi -lapa102 -lpthread
 
 flash_strip: flash_strip.c
-	gcc -L. -I./lib  -o bin/flash_strip flash_strip.c -lwiringPi -lapa102 -lpthread
+	gcc -L. -I./lib  -o bin/flash_strip flash_strip.c -lwiringPi -lapa102 -lpthread 
