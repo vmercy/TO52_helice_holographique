@@ -28,7 +28,7 @@ void writeFrame(struct APA102 *strip, struct APA102 *strip2, struct APA102_Frame
 int main(int argc, char *argv[])
 {
    if( argc == 3 ) {
-      printf("The color argument supplied is %s and delay is %i\n", argv[1], argv[2]);
+      printf("The color argument supplied is %s and delay is %s\n", argv[1], argv[2]);
    }
    else if( argc > 3 ) {
       printf("Too many arguments supplied. Expected arguments are a string describing color (red, yellow or green) and a delay in ms\n");
