@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
    printf("before delay assignment\n");
 
-  int color = atoi(argv[1]);
+  int colorSelected = atoi(argv[1]);
    int delay = atoi(argv[2]);
 
    printf("after delay assignment : delay = %i\n",delay);
@@ -56,9 +56,9 @@ int main(int argc, char *argv[])
 
    printf("Im here\n");
 
-   int isRed = (color==0);
-   int isYellow = (color==1);
-   int isGreen = (color==2);
+   int isRed = (colorSelected==0);
+   int isYellow = (colorSelected==1);
+   int isGreen = (colorSelected==2);
 
    printf("Colors : %i %i %i",isRed, isYellow, isGreen);
 
