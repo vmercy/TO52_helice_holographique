@@ -194,4 +194,4 @@ def home():
 if __name__=="__main__":
 
   app.debug = True
-  app.run(extra_files=['./img_uploaded','./static/preview.png'])
+  app.run(host='0.0.0.0')
