@@ -46,11 +46,11 @@ int main(int argc, char *argv[])
 
    printf("after delay assignment : delay = %i\n",delay);
 
-   if(delay<0)
+   /* if(delay<0)
    {
      printf("Delay must be non-negative.\n");
      exit(0);
-   }
+   } */
 
    printf("Im here");
 
