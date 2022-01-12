@@ -41,7 +41,9 @@ int main(int argc, char *argv[])
 
    printf('before delay assignment');
 
-   int delay = atoi(argv[2]);
+
+
+   /* int delay = atoi(argv[2]);
 
    printf('after delay assignment');
 
@@ -76,5 +78,5 @@ int main(int argc, char *argv[])
 
   sleep(delay);
 
-  writeFrame(strip, strip2, offFrame);
+  writeFrame(strip, strip2, offFrame); */
 }
