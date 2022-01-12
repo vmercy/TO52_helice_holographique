@@ -3,8 +3,8 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include "apa102.h"
+#include <stdlib.h>
 #include <signal.h>
 #include "string.h"
 #include "time.h"
@@ -28,7 +28,7 @@ void writeFrame(struct APA102 *strip, struct APA102 *strip2, struct APA102_Frame
 
 int main(int argc, char *argv[])
 {
-   /* if( argc == 3 ) {
+   if( argc == 3 ) {
       printf("The color argument supplied is %s and delay is %s\n", argv[1], argv[2]);
    }
    else if( argc > 3 ) {
@@ -38,27 +38,27 @@ int main(int argc, char *argv[])
    else {
       printf("2 argument expected : color as string and delay as integer.\n");
       exit(0);
-   } */
+   }
 
    printf("before delay assignment\n");
 
-   //int delay = atoi(argv[2]);
-  int delay = 100;
+  int color = atoi(argv[1]);
+   int delay = atoi(argv[2]);
 
    printf("after delay assignment : delay = %i\n",delay);
 
 
-   printf("Im here\n");
-
-   /* if(delay<0)
+ if(delay<0)
    {
      printf("Delay must be non-negative.\n");
      exit(0);
-   } */
+   }
 
-   int isRed = abs(strcmp(argv[1], "red"));
-   int isYellow = abs(strcmp(argv[1], "yellow"));
-   int isGreen = abs(strcmp(argv[1], "green"));
+   printf("Im here\n");
+
+   int isRed = (color==0);
+   int isYellow = (color==1);
+   int isGreen = (color==2);
 
    printf("Colors : %i %i %i",isRed, isYellow, isGreen);
 
@@ -80,4 +80,6 @@ int main(int argc, char *argv[])
   sleep(delay);
 
   writeFrame(strip, strip2, offFrame);
+
+  return 0;
 }
