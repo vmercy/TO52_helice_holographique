@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
    int isYellow = abs(strcmp(argv[1], "yellow"));
    int isGreen = abs(strcmp(argv[1], "green"));
 
+   printf("Colors : %i %i %i",isRed, isYellow, isGreen);
+
   if(!isRed && !isYellow && !isGreen)
   {
     printf("Unauthorized color supplied. Authorized colors are : red, yellow and green");
