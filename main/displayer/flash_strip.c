@@ -2,9 +2,9 @@
   blinkanim.c: Plays an animation on static LED strip selected from command-line
 */
 
-#include "apa102.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "apa102.h"
 #include <signal.h>
 #include "string.h"
 #include "time.h"
@@ -48,13 +48,13 @@ int main(int argc, char *argv[])
    printf("after delay assignment : delay = %i\n",delay);
 
 
+   printf("Im here\n");
+
    /* if(delay<0)
    {
      printf("Delay must be non-negative.\n");
      exit(0);
    } */
-
-   printf("Im here");
 
    int isRed = abs(strcmp(argv[1], "red"));
    int isYellow = abs(strcmp(argv[1], "yellow"));
