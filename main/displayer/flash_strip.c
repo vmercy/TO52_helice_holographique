@@ -39,7 +39,11 @@ int main(int argc, char *argv[])
       exit(0);
    }
 
+   printf('before delay assignment');
+
    int delay = atoi(argv[2]);
+
+   printf('after delay assignment');
 
    if(delay<0)
    {
