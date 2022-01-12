@@ -12,8 +12,8 @@ lib/build/apa102.o: lib/apa102.c lib/apa102.h
 lib/build/apa102_anim.o: lib/apa102_anim.c lib/apa102.h
 	gcc -c  -o lib/build/apa102_anim.o lib/apa102_anim.c
 
-display: displayer.c
-	gcc -L. -I./lib  -o bin/displayer display.c -lwiringPi -lapa102 -lpthread
+displayer: displayer.c
+	gcc -L. -I./lib  -o bin/displayer displayer.c -lwiringPi -lapa102 -lpthread
 
 flash_strip: flash_strip.c
 	gcc -L. -I./lib  -o bin/displayer flash_strip.c -lwiringPi -lapa102 -lpthread
