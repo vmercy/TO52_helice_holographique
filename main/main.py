@@ -52,7 +52,7 @@ def startSequence():
   """Play a visual and sonor alert to make sure that display is alive
   """
   stopDisplayer()
-  flashStrip('green', 200)
+  flashStrip('green', 1)
   buzz.start()
 
 def compileFlashStripIfNotAlreadyDone():
@@ -71,7 +71,7 @@ def warnBeforeStart():
   """Play a visual and sonor alert before starting the propeller for safety reasons
   """
   for i in range(3):
-    flashStrip("yellow", 100)
+    flashStrip("yellow", 1)
     buzz.warn()
     sleep(200)
 
@@ -113,7 +113,7 @@ def stopDisplayer(skipBuzz = False, subProcessToKill = None):
       skipBuzz (bool): If true, buzzer won't play any sound
   """
   GPIO.output(MOTOR_PIN, GPIO.LOW)
-  flashStrip(0, 100)
+  flashStrip(0, 1)
   if not skipBuzz:
     buzz.shutDown()
   if subProcessToKill:
