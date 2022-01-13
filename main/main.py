@@ -113,6 +113,7 @@ def stopDisplayer(skipBuzz = False, subProcessToKill = None):
       skipBuzz (bool): If true, buzzer won't play any sound
   """
   GPIO.output(MOTOR_PIN, GPIO.LOW)
+  flashStrip(0, 100)
   if not skipBuzz:
     buzz.shutDown()
   if subProcessToKill:

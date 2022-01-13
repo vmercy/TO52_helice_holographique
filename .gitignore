@@ -128,3 +128,4 @@ dmypy.json
 .pyre/
 
 main/img_uploaded/*
+main/displayer/bin
