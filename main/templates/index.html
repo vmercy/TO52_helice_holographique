@@ -4,59 +4,71 @@
 <head>
     <meta charset="utf-8">
     <title>Hélice holographique</title>
-    <!-- TODO: add favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style/style.css') }}">
 </head>
+<style>
+    .content {
+        padding: 50px;
+        max-width: 1000px;
+        margin: auto;
+        border: solid #666A72 2px;
+        border-radius: 2px;
+    }
+</style>
 
-<body>
-    <h1>Afficher une image</h1>
-    <div class="border-top pt-3">
-        <div class="content-section">
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
+<body style="padding-top: 50px;">
+    <div class="content">
+        <h1>Hélice holographique<img src="{{ url_for('static',filename='propeller.gif') }}"></h1>
+        <h4>Bienvenue sur l'interface de commande de l'hélice holographique</h4>
+        <div class="border-top pt-3">
+            <div class="content-section">
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
             </div>
-            {% endfor %} {% endif %} {% endwith %}
-        </div>
-        <div class="content-section">
-            <form action="/" method="post" enctype=multipart/form-data>
-                <p>Pour afficher une image sur l'hélice :
-                    <ol>
-                        <li>Importer l'image : <input required type="file" name="image_to_display" /></li>
-                        <li>Choisir le nombre de LED par pale (résolution radiale) : <input required type="number" min="1" max="48" value="35" placeholder="35" name="radial_resolution" /></li>
-                        <li>Choisir le nombre de secteurs (résolution angulaire) : <input required type="number" min="1" max="50" value="16" placeholder="16" name="angular_resolution" /></li>
-                        <li><input type="submit" value="Prévisualiser le rendu" /></li>
-                        {%if RUN_ALLOWED %}
-                        <div class="content-section">
-                            <li>Vérifier le rendu :
-                                <img src="/static/preview.png" />
-                            </li>
-                            <li>Démarrer/arrêter l'hélice :
+            <div class="content-section">
+                <form action="/" method="post" enctype=multipart/form-data>
+                    <p>Pour afficher une image sur l'hélice :
+                        <ol>
+                            <li>Importer l'image à afficher : <input required type="file" name="image_to_display" /></li>
+                            <li>Choisir le nombre de LED par pale (résolution radiale) : <input required type="number" min="1" max="48" value="35" placeholder="35" name="radial_resolution" /></li>
+                            <li>Choisir le nombre de secteurs (résolution angulaire) : <input required type="number" min="1" max="50" value="16" placeholder="16" name="angular_resolution" /></li>
+                            <li><input type="submit" value="Prévisualiser le rendu" /></li>
+                            {%if RUN_ALLOWED %}
+                            <div class="content-section">
+                                <li>Vérifier le rendu :</br>
+                                    <img src="/static/preview.png" alt="Prévisualisation du rendu sur l'hélice" height="700px" width="700px" />
+                                </li>
+                                <li>Démarrer/arrêter l'hélice :
 
-                            </li>
-                        </div>
-                        {% endif %}
-                    </ol>
-                </p>
-            </form>
-            {%if RUN_ALLOWED %}
-            <form action="/" method="post">
-                <input type="hidden" name="command" value="run_prop">
-                <input type="submit" value="Démarrer l'hélice">
-            </form>
-            <form action="/" method="post">
-                <input type="hidden" name="command" value="stop_prop">
-                <input type="submit" value="Arrêter l'hélice">
-            </form>
-            {% endif %}
+                                </li>
+                            </div>
+                            {% endif %}
+                        </ol>
+                    </p>
+                </form>
+                {%if RUN_ALLOWED %}
+                <form action="/" method="post">
+                    <input type="hidden" name="command" value="run_prop">
+                    <input type="submit" value="Démarrer l'hélice">
+                </form>
+                <form action="/" method="post">
+                    <input type="hidden" name="command" value="stop_prop">
+                    <input type="submit" value="Arrêter l'hélice">
+                </form>
+                {% endif %}
+            </div>
         </div>
+        <footer>
+            <div class="page-footer font-small">
+                <i>Interface réalisée par <a href="mailto:valentin.mercy@utbm.fr">Valentin Mercy</a> dans le cadre de l'UV TO52
+          de l'<a href="https://www.utbm.fr" target="_blank">Université de Technologie de Belfort-Montbéliard</a>.</i>
+            </div>
+        </footer>
     </div>
-    <footer>
-        <div class="page-footer font-small">
-            <i>Interface réalisée par <a href="mailto:valentin.mercy@utbm.fr">Valentin Mercy</a> dans le cadre de l'UV TO52 de l'<a
-          href="https://www.utbm.fr" target="_blank">Université de Technologie de Belfort-Montbéliard</a>.</i>
-        </div>
-    </footer>
 </body>
 
 </html>

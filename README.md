@@ -50,6 +50,9 @@ sudo pip3 install flask python-dotenv
 ```
 ifconfig
 ```
+#TODO: creer dossier bin
+#TODO: compiler displayer.c et flash_strip.c avec make
+#TODO: creer dossier img_uploaded
 7. Installer le service systemd :
 ```
 #TODO
@@ -58,11 +61,7 @@ ifconfig
 ```
 sudo reboot now
 ```
-#TODO: compiler displayer.c et flash_strip.c avec make
-#TODO: creer dossier img_uploaded
-#TODO: creer dossier bin
 
 
-#TODO: réparer le Makefile (mkdir lib/build)
 ## Utilisation
-8. Désormais, à chaque redémarrage l'hélice peut être commandée via un autre PC sur le même réseau en saisissant son adresse IP (voir étape 5 ci-dessus) dans le navigateur.
+Désormais, à chaque redémarrage l'hélice peut être commandée via un autre PC sur le même réseau en saisissant son adresse IP (voir étape 6 ci-dessus) dans le navigateur sous la forme ```http://<IP>:5000```

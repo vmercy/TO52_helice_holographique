@@ -3,6 +3,9 @@ all: libapa102.a
 clean:
 	rm -f libapa102.a 
 
+cleanDisplayer:
+	rm -f bin/displayer
+
 libapa102.a: lib/build/apa102.o lib/build/apa102_anim.o
 	ar rcs libapa102.a lib/build/apa102.o lib/build/apa102_anim.o
 

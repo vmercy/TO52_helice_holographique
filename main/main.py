@@ -1,5 +1,6 @@
 """Main script
 """
+import imp
 from logging import warning
 from dotenv import load_dotenv
 import os
@@ -12,6 +13,7 @@ from converter.converter import *
 import subprocess
 import signal
 import sys
+from os import path
 
 load_dotenv()
 
@@ -38,7 +40,7 @@ ANGULAR_RESOLUTION_BOUNDS = {'min':1,'max':50}
 
 RUN_ALLOWED = False
 
-BUZZER_PIN = 22 #BCM TODO: check 17 otherwise
+BUZZER_PIN = 22 #BCM
 MOTOR_PIN = 6 #BCM
 
 GPIO.setmode(GPIO.BCM)
@@ -53,6 +55,18 @@ def startSequence():
   stopDisplayer()
   flashStrip('green', 200)
   buzz.start()
+
+def compileFlashStripIfNotAlreadyDone():
+  """Checks if displayer/bin/flash_strip has been compiled and compile it if not
+  """
+  if not path.exists('displayer/bin/flash_strip'):
+    subprocess.Popen(["make","flash_strip"], stdout=subprocess.PIPE, cwd="displayer").wait()
+
+def compileDisplayer():
+  """Compiles C program responsible for displaying image on propeller after updating .h file
+  """
+  subprocess.Popen(["make","cleanDisplayer"], stdout=subprocess.PIPE, cwd="displayer").wait()
+  subprocess.Popen(["make","displayer"], stdout=subprocess.PIPE, cwd="displayer").wait()
 
 def warnBeforeStart():
   """Play a visual and sonor alert before starting the propeller for safety reasons
@@ -72,7 +86,7 @@ def flashStrip(color, delay):
   allowedColors = ['red', 'yellow', 'green']
   if color not in allowedColors:
     return
-  subprocess.call(["./displayer/bin/flash_strip",str(allowedColors.index(color)),str(delay)])
+  subprocess.call(["./displayer/bin/flash_strip",str(allowedColors.index(color)),str(delay)], stdout=subprocess.PIPE)
 
 def getImageToDisplay():
   """Gets the image to be displayed from USB key
@@ -91,7 +105,7 @@ def startDisplayer(angularResolution, radialResolution):
   """
   warnBeforeStart()
   GPIO.output(MOTOR_PIN, GPIO.HIGH)
-  return subprocess.Popen(['./displayer/bin/displayer', str(angularResolution), str(radialResolution)])
+  return subprocess.Popen(['./displayer/bin/displayer', str(angularResolution), str(radialResolution)], stdout=subprocess.PIPE)
 
 def stopDisplayer(skipBuzz = False, subProcessToKill = None):
   """Stops display motor
@@ -123,7 +137,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get("flask_secret")
 
-#TODO: make sure that displayer/bin/displayer and displayer/bin/flash_strip are present or ask for making them
+compileFlashStripIfNotAlreadyDone()
 
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
@@ -145,7 +159,7 @@ def home():
         return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
       elif request.form.get('command') == 'stop_prop':
         stopDisplayer(subProcessToKill=displayerSubprocess)
-        flash('Hélice arrêtée avec succès','success')
+        flash('Hélice arrêtée avec succès','info')
         return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
     RUN_ALLOWED = False
     angular_res_input = int(request.form.get('angular_resolution'))
@@ -200,7 +214,10 @@ def home():
             savePickedColors('./displayer/sequenced_image.h', pickedColors, nbSectors)
             renderPickedPointsPreview(outputFileName, pickedColors, 10)
 
-            flash('Image importée et traitée avec succès, prévisualisation en cours', 'success')
+            flash('Image importée et traitée avec succès, prévisualisation en cours', 'warning')
+
+            compileDisplayer()
+
             RUN_ALLOWED = True
             
             return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)

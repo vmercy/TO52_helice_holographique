@@ -52,15 +52,25 @@ int main(int argc, char *argv[])
 {
   if(argc!=3)
   {
-    printf('There must be exactly 2 arguments supplied : angular resolution and radial resolution.');
+    printf("There must be exactly 2 arguments supplied : angular resolution and radial resolution.");
     exit(0);
   }
 
-  //TODO: add checks (2 aguments must be >0 and inferior to their respective limits)
-
-  
   int nbSectorsUsed = atoi(argv[1]); //angular resolution
+
+  if(nbSectorsUsed<1||nbSectorsUsed>NB_SECTORS_MAX)
+  {
+    printf("Angular resolution supplied as first argument must be positive and < NB_SECTORS_MAX");
+    exit(0);
+  }
+
   int nbLedsUsed = atoi(argv[2]); //radial resolution
+
+  if(nbLedsUsed<1||nbLedsUsed>NB_LEDS_PER_STRIP_MAX)
+  {
+    printf("Radial resolution supplied as first argument must be positive and < NB_LEDS_PER_STRIP_MAX");
+    exit(0);
+  }
 
   int nbColorPoints = 2*nbSectorsUsed*nbLedsUsed;
 
