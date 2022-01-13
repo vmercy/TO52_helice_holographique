@@ -131,7 +131,7 @@ def isFilenameAllowed(filename):
   global ALLOWED_EXTENSIONS
   return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+#TODO: make preview button unclickable until image has been imported
 startSequence()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
