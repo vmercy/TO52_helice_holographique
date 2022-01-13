@@ -1,6 +1,5 @@
 """Main script
 """
-import imp
 from logging import warning
 from dotenv import load_dotenv
 import os
