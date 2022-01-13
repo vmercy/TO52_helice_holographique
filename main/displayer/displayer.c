@@ -5,6 +5,7 @@
 #include "apa102.h"
 #include <wiringPi.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 
 #define SENSOR_PIN 2
