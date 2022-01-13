@@ -1,21 +1,24 @@
-"""Web server script
+"""Main script
 """
 from logging import warning
 from dotenv import load_dotenv
 import os
 from flask import Flask, render_template, url_for, request, flash, redirect, send_from_directory
 from werkzeug.utils import secure_filename
-from time import sleep
+from time import sleep, time
 import RPi.GPIO as GPIO
 from buzzer import Buzzer
 from converter.converter import *
-from subprocess import call
+import subprocess
 import signal
 import sys
 
 load_dotenv()
 
+displayerSubprocess = None
+
 def sigint_handler(sig, frame):
+  global displayerSubprocess
   """Handler for SIGINT signal
 
   Args:
@@ -23,8 +26,8 @@ def sigint_handler(sig, frame):
       frame (frame): unused
   """
   buzz.error()
-  stopDisplay(True)
-  #sys.exit(0)
+  stopDisplayer(True, displayerSubprocess)
+  sys.exit(0)
 
 signal.signal(signal.SIGINT, sigint_handler) #associate SIGINT with its handler
 
@@ -47,7 +50,7 @@ buzz.setEnable(True)
 def startSequence():
   """Play a visual and sonor alert to make sure that display is alive
   """
-  stopDisplay()
+  stopDisplayer()
   flashStrip('green', 200)
   buzz.start()
 
@@ -55,8 +58,9 @@ def warnBeforeStart():
   """Play a visual and sonor alert before starting the propeller for safety reasons
   """
   for i in range(3):
-    buzz.warn()
     flashStrip("yellow", 100)
+    buzz.warn()
+    sleep(200)
 
 def flashStrip(color, delay):
   """Flashes LED strip 
@@ -65,22 +69,31 @@ def flashStrip(color, delay):
       color (string): The expected color for flashing. Can be red, yellow or green
       delay (int): The time of flashing in milliseconds
   """
-  if color not in ['red', 'yellow', 'green']:
+  allowedColors = ['red', 'yellow', 'green']
+  if color not in allowedColors:
     return
-  call(["./displayer/bin/flash_strip",color,str(delay)])
+  subprocess.call(["./displayer/bin/flash_strip",str(allowedColors.index(color)),str(delay)])
 
 def getImageToDisplay():
   """Gets the image to be displayed from USB key
   """
   pass #TODO for use with no local network
 
-def startDisplay():
-  """Starts motor
+def startDisplayer(angularResolution, radialResolution):
+  """Starts displayer subprocess
+
+  Args:
+      angularResolution (int): Angular resolution (number of displaying sectors)
+      radialResolution (int): Radial resolution (number of LEDs)
+
+  Returns:
+      subprocess: subprocess created for displayer
   """
   warnBeforeStart()
   GPIO.output(MOTOR_PIN, GPIO.HIGH)
+  return subprocess.Popen(['./displayer/bin/displayer', str(angularResolution), str(radialResolution)])
 
-def stopDisplay(skipBuzz = False):
+def stopDisplayer(skipBuzz = False, subProcessToKill = None):
   """Stops display motor
 
   Args:
@@ -89,9 +102,10 @@ def stopDisplay(skipBuzz = False):
   GPIO.output(MOTOR_PIN, GPIO.LOW)
   if not skipBuzz:
     buzz.shutDown()
-  
+  if subProcessToKill:
+    subProcessToKill.terminate()
 
-def allowed_file(filename):
+def isFilenameAllowed(filename):
   """Evaluates whether the filename can be accepted or not
 
   Args:
@@ -109,7 +123,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get("flask_secret")
 
-#TODO: make sure that displayer/bin/displayer and displayer/bin/flash_strip are present or compile them with make
+#TODO: make sure that displayer/bin/displayer and displayer/bin/flash_strip are present or ask for making them
 
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
@@ -117,19 +131,20 @@ def download_file(filename):
 
 #TODO: disable start/stop button when pressed until the other is pressed
 
+angular_res_input = None
+radial_res_input = None
+
 @app.route("/", methods=['GET', 'POST'])
 def home():
-  global RUN_ALLOWED
+  global RUN_ALLOWED, angular_res_input, radial_res_input
   if request.method == 'POST':
     if RUN_ALLOWED:
       if request.form.get('command') == 'run_prop':
-        startDisplay()
-        #TODO: call
+        startDisplayer(angular_res_input, radial_res_input)
         flash('Hélice démarrée avec succès','success')
         return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
       elif request.form.get('command') == 'stop_prop':
-        #TODO: kill (see https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true)
-        stopDisplay()
+        stopDisplayer(subProcessToKill=displayerSubprocess)
         flash('Hélice arrêtée avec succès','success')
         return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
     RUN_ALLOWED = False
@@ -155,10 +170,10 @@ def home():
     if file.filename == '':
         flash('Aucun fichier sélectionné', warning)
         return redirect(request.url)
-    if not allowed_file(file.filename):
+    if not isFilenameAllowed(file.filename):
         flash('Fichier image invalide, seuls les fichiers au format .png, .jpg ou .jpeg sont acceptés', 'warning')
         return redirect(request.url)
-    if file and allowed_file(file.filename):
+    if file and isFilenameAllowed(file.filename):
             filename = secure_filename(file.filename)
             fullpath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(fullpath)
@@ -192,6 +207,5 @@ def home():
   return render_template('index.html')
 
 if __name__=="__main__":
-
   app.debug = True
   app.run(host='0.0.0.0')

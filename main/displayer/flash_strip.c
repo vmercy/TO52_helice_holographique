@@ -28,41 +28,35 @@ void writeFrame(struct APA102 *strip, struct APA102 *strip2, struct APA102_Frame
 
 int main(int argc, char *argv[])
 {
-   if( argc == 3 ) {
-      printf("The color argument supplied is %s and delay is %s\n", argv[1], argv[2]);
-   }
-   else if( argc > 3 ) {
-      printf("Too many arguments supplied. Expected arguments are a string describing color (red, yellow or green) and a delay in ms\n");
-      exit(0);
-   }
-   else {
-      printf("2 argument expected : color as string and delay as integer.\n");
-      exit(0);
-   }
-
-   printf("before delay assignment\n");
+  if (argc == 3)
+  {
+    printf("The color argument supplied is %s and delay is %s\n", argv[1], argv[2]);
+  }
+  else if (argc > 3)
+  {
+    printf("Too many arguments supplied. Expected arguments are a string describing color (red, yellow or green) and a delay in ms\n");
+    exit(0);
+  }
+  else
+  {
+    printf("2 argument expected : color as string and delay as integer.\n");
+    exit(0);
+  }
 
   int colorSelected = atoi(argv[1]);
-   int delay = atoi(argv[2]);
+  int delay = atoi(argv[2]);
 
-   printf("after delay assignment : delay = %i\n",delay);
+  if (delay < 0)
+  {
+    printf("Delay must be non-negative.\n");
+    exit(0);
+  }
 
+  int isRed = (colorSelected == 0);
+  int isYellow = (colorSelected == 1);
+  int isGreen = (colorSelected == 2);
 
- if(delay<0)
-   {
-     printf("Delay must be non-negative.\n");
-     exit(0);
-   }
-
-   printf("Im here\n");
-
-   int isRed = (colorSelected==0);
-   int isYellow = (colorSelected==1);
-   int isGreen = (colorSelected==2);
-
-   printf("Colors : %i %i %i",isRed, isYellow, isGreen);
-
-  if(!isRed && !isYellow && !isGreen)
+  if (!isRed && !isYellow && !isGreen)
   {
     printf("Unauthorized color supplied. Authorized colors are : red, yellow and green");
     exit(0);
@@ -73,7 +67,7 @@ int main(int argc, char *argv[])
   struct APA102_Frame *offFrame = APA102_CreateFrame(0x00, 0x00, 0x00, 0x00);
   strip = APA102_Init(NB_LEDS_PER_STRIP, 0);
   strip2 = APA102_Init(NB_LEDS_PER_STRIP, 1);
-  struct APA102_Frame *color = APA102_CreateFrame(31, (isRed||isYellow) ? 255 : 0, (isGreen||isYellow) ? 255 : 0 , 0);
+  struct APA102_Frame *color = APA102_CreateFrame(31, (isRed || isYellow) ? 255 : 0, (isGreen || isYellow) ? 255 : 0, 0);
 
   writeFrame(strip, strip2, color);
 

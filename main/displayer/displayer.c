@@ -50,7 +50,6 @@ void startMotor()
 
 int main(int argc, char *argv[])
 {
-
   if(argc!=3)
   {
     printf('There must be exactly 2 arguments supplied : angular resolution and radial resolution.');
@@ -58,6 +57,8 @@ int main(int argc, char *argv[])
   }
 
   //TODO: add checks (2 aguments must be >0 and inferior to their respective limits)
+
+  
   int nbSectorsUsed = atoi(argv[1]); //angular resolution
   int nbLedsUsed = atoi(argv[2]); //radial resolution
 
