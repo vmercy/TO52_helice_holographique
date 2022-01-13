@@ -102,7 +102,7 @@ def startDisplayer(angularResolution, radialResolution):
   Returns:
       subprocess: subprocess created for displayer
   """
-  warnBeforeStart()
+  #warnBeforeStart()
   GPIO.output(MOTOR_PIN, GPIO.HIGH)
   return subprocess.Popen(['./displayer/bin/displayer', str(angularResolution), str(radialResolution)], stdout=subprocess.PIPE)
 
