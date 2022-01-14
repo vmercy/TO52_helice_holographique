@@ -61,14 +61,14 @@ mkdir main/img_uploaded
 make main/displayer
 make main/flash_strip
 ```
-7. Installer le service systemd :
+9. Installer le service systemd :
 ```
 cp main/displayer/displayWebServer.service /lib/systemd/system/displayWebServer.service
 sudo chmod 644 /lib/systemd/system/displayWebServer.service
 sudo systemctl daemon-reload
 sudo systemctl enable displayWebServer.service
 ```
-8. Redémarrer la raspberry
+10. Redémarrer la raspberry
 ```
 sudo reboot now
 ```
