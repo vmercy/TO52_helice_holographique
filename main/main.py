@@ -1,4 +1,6 @@
-"""Main script
+#!/usr/bin/python3
+
+"""Main script including control interface as web server
 """
 from logging import warning
 from dotenv import load_dotenv

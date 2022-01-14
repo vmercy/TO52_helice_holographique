@@ -70,7 +70,6 @@ def computePickingPointsPositionsOnDiametralLine(pickingAreaDiameter, nbPoints, 
     pointsPositions.append(((angle, -radialIndex),(pickingAreaDiameter/2-radial*sin(angle), pickingAreaDiameter/2-radial*cos(angle))))
   return pointsPositions
 
-#def addTrailArcs
 
 def getPickingPoints(pickingAreaDiameter, nbPointsPerLine, angleStep, angleMin = 0, angleMax = 180):
   """Builds 
@@ -113,4 +112,4 @@ if __name__ == "__main__":
   pickingPoints = getPickingPoints(baseImgSize, nbEllipsesPerDiametralLine, angleStep)
   pickedColors = pickColors(pickingPoints, centeredImage)
   print(pickedColors)
-  renderPickedPointsPreview(outputFileName, pickedColors, 10)
+  renderPickedPointsPreview(outputFileName, pickedColors, 5)

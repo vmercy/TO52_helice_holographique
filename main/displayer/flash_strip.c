@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include "string.h"
-#include "time.h"
+#include <time.h>
 
 #define NB_LEDS_PER_STRIP 48
 
