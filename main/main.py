@@ -14,7 +14,9 @@ from converter.converter import *
 import subprocess
 import signal
 import sys
-from os import path
+import os
+
+ABSOLUTE_PATH = os.path.dirname(os.path.abspath(__file__))+'/'
 
 load_dotenv()
 
@@ -60,14 +62,14 @@ def startSequence():
 def compileFlashStripIfNotAlreadyDone():
   """Checks if displayer/bin/flash_strip has been compiled and compile it if not
   """
-  if not path.exists('displayer/bin/flash_strip'):
-    subprocess.Popen(["make","flash_strip"], stdout=subprocess.PIPE, cwd="displayer").wait()
+  if not os.path.exists(ABSOLUTE_PATH+'displayer/bin/flash_strip'):
+    subprocess.Popen(["make","flash_strip"], stdout=subprocess.PIPE, cwd=ABSOLUTE_PATH+"displayer").wait()
 
 def compileDisplayer():
   """Compiles C program responsible for displaying image on propeller after updating .h file
   """
-  subprocess.Popen(["make","cleanDisplayer"], stdout=subprocess.PIPE, cwd="displayer").wait()
-  subprocess.Popen(["make","displayer"], stdout=subprocess.PIPE, cwd="displayer").wait()
+  subprocess.Popen(["make","cleanDisplayer"], stdout=subprocess.PIPE, cwd=ABSOLUTE_PATH+"displayer").wait()
+  subprocess.Popen(["make","displayer"], stdout=subprocess.PIPE, cwd=ABSOLUTE_PATH+"displayer").wait()
 
 def warnBeforeStart():
   """Play a visual and sonor alert before starting the propeller for safety reasons
@@ -75,7 +77,7 @@ def warnBeforeStart():
   for i in range(3):
     flashStrip("yellow", 1)
     buzz.warn()
-    sleep(200)
+    sleep(0.5)
 
 def flashStrip(color, delay):
   """Flashes LED strip 
@@ -87,12 +89,7 @@ def flashStrip(color, delay):
   allowedColors = ['red', 'yellow', 'green']
   if color not in allowedColors:
     return
-  subprocess.call(["./displayer/bin/flash_strip",str(allowedColors.index(color)),str(delay)], stdout=subprocess.PIPE)
-
-def getImageToDisplay():
-  """Gets the image to be displayed from USB key
-  """
-  pass #TODO for use with no local network
+  subprocess.Popen(["./flash_strip",str(allowedColors.index(color)),str(delay)], stdout=subprocess.PIPE, cwd=ABSOLUTE_PATH+"displayer/bin")
 
 def startDisplayer(angularResolution, radialResolution):
   """Starts displayer subprocess
@@ -104,9 +101,9 @@ def startDisplayer(angularResolution, radialResolution):
   Returns:
       subprocess: subprocess created for displayer
   """
-  #warnBeforeStart()
+  warnBeforeStart()
   GPIO.output(MOTOR_PIN, GPIO.HIGH)
-  return subprocess.Popen(['./displayer/bin/displayer', str(angularResolution), str(radialResolution)], stdout=subprocess.PIPE)
+  return subprocess.Popen(["./displayer",str(angularResolution),str(radialResolution)], stdout=subprocess.PIPE, cwd=ABSOLUTE_PATH+"displayer/bin")
 
 def stopDisplayer(skipBuzz = False, subProcessToKill = None):
   """Stops display motor
@@ -133,7 +130,7 @@ def isFilenameAllowed(filename):
   global ALLOWED_EXTENSIONS
   return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-#TODO: make preview button unclickable until image has been imported
+
 startSequence()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -144,8 +141,6 @@ compileFlashStripIfNotAlreadyDone()
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
     return send_from_directory('preview', filename, as_attachment=True)
-
-#TODO: disable start/stop button when pressed until the other is pressed
 
 angular_res_input = None
 radial_res_input = None
@@ -158,11 +153,11 @@ def home():
       if request.form.get('command') == 'run_prop':
         startDisplayer(angular_res_input, radial_res_input)
         flash('Hélice démarrée avec succès','success')
-        return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
+        return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED, startBtnDisabled = True, stopBtnDisabled = False)
       elif request.form.get('command') == 'stop_prop':
         stopDisplayer(subProcessToKill=displayerSubprocess)
         flash('Hélice arrêtée avec succès','info')
-        return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED)
+        return render_template('index.html',preview_url="preview/preview.png", RUN_ALLOWED = RUN_ALLOWED, startBtnDisabled = False, stopBtnDisabled = True)
     RUN_ALLOWED = False
     angular_res_input = int(request.form.get('angular_resolution'))
     radial_res_input = int(request.form.get('radial_resolution'))

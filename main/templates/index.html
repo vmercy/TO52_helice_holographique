@@ -53,11 +53,11 @@
                 {%if RUN_ALLOWED %}
                 <form action="/" method="post">
                     <input type="hidden" name="command" value="run_prop">
-                    <input type="submit" value="Démarrer l'hélice">
+                    <input type="submit" {%if startBtnDisabled %} disabled {%endif%} value="Démarrer l'hélice">
                 </form>
                 <form action="/" method="post">
                     <input type="hidden" name="command" value="stop_prop">
-                    <input type="submit" value="Arrêter l'hélice">
+                    <input type="submit" {%if stopBtnDisabled %} disabled {%endif%} value="Arrêter l'hélice">
                 </form>
                 {% endif %}
             </div>
